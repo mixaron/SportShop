@@ -1,4 +1,4 @@
-package ryabchuk.sportshop.entity;
+package ryabchuk.sportshop.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
