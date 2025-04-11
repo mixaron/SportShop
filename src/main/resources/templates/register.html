@@ -7,7 +7,7 @@
 <body>
 <form th:action="@{/auth/register}" method="post" th:object="${userDto}">
   <label>
-    <input type="text" th:field="*{email}" placeholder="Username" required>
+    <input type="text" th:field="*{email}" placeholder="Email" required>
   </label>
   <label>
     <input type="password" th:field="*{password}" placeholder="Password" required>
