@@ -36,5 +36,4 @@ public class Notification {
         EMAIL, PUSH, TELEGRAM
     }
 
-    // геттеры, сеттеры
 }

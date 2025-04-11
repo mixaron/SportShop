@@ -37,5 +37,4 @@ public class Message {
         PRIVATE, GROUP
     }
 
-    // геттеры, сеттеры
 }
