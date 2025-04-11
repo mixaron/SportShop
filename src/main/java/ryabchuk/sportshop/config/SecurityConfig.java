@@ -21,7 +21,6 @@ public class SecurityConfig {
                 )
 
                 .formLogin(form -> form
-                        .loginPage("/auth/login")
                         .defaultSuccessUrl("/products", true)
                         .permitAll()
                 )
