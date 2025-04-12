@@ -7,6 +7,8 @@ CREATE TABLE users (
     role VARCHAR(20) NOT NULL DEFAULT 'USER' CHECK (role IN ('USER', 'MODERATOR', 'ADMIN')),
     telegram_chat_id VARCHAR(50),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    reset_token text,
+    reset_token_expiry timestamp
 );
 
 CREATE TABLE categories (
@@ -68,3 +70,7 @@ CREATE TABLE admin_logs (
     action VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+чтобы сделать oauth2 надо включить в security, добавить в application, и запустить через ngrok, так же надо указать
+Homepage URL и Authorization callback URL который обычно выглядит как http://cd07-88-218-44-175.ngrok-free.app/login/oauth2/code/github
