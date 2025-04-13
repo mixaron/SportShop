@@ -26,7 +26,6 @@ public class SecurityConfig {
 
                 .formLogin(form -> form
                         .loginPage("/auth/login")
-                        .defaultSuccessUrl("/products", true)
                         .successHandler(customAuthenticationSuccessHandler)
                         .failureHandler(customAuthenticationFailureHandler)
                         .permitAll()
@@ -39,7 +38,7 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/products", true)
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/auth/logout")
+                        .logoutUrl("/logout")
                         .logoutSuccessUrl("/products")
                         .permitAll()
                 );
