@@ -19,6 +19,8 @@ public class Product {
     @Column(nullable = false)
     private String name;
 
+    private String description;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "category_id")
     private Category category;
@@ -26,8 +28,8 @@ public class Product {
     @Column(nullable = false)
     private BigDecimal price;
 
-    @Column(name = "image_url")
-    private String imageUrl;
+    @Column(columnDefinition = "BYTEA")
+    private byte[] image;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
