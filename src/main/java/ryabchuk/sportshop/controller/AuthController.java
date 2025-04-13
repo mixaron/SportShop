@@ -1,10 +1,12 @@
 package ryabchuk.sportshop.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ryabchuk.sportshop.dto.UserDto;
 import ryabchuk.sportshop.service.UserService;
 
@@ -22,9 +24,22 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String registerProcess(@ModelAttribute UserDto userDto) {
-        userService.register(userDto);
-        return "redirect:/auth/login";
+    public String register(@ModelAttribute @Valid UserDto userDto,
+                           @RequestParam String confirmPassword,
+                           Model model,
+                           RedirectAttributes redirect) {
+        if (!userDto.getPassword().equals(confirmPassword)) {
+            model.addAttribute("error", "Пароли не совпадают");
+            return "auth/register";
+        }
+        try {
+            userService.register(userDto);
+            redirect.addFlashAttribute("message", "Регистрация успешна, войдите");
+            return "redirect:/auth/login";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", e.getMessage());
+            return "auth/register";
+        }
     }
 
     @GetMapping("/login")
