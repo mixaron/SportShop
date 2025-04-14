@@ -60,4 +60,9 @@ public class CartService {
                 .orElseThrow(() -> new EntityNotFoundException("Cart item not found"));
         cartItemRepository.delete(item);
     }
+
+    public void removeFromCartById(Long userId) {
+        List<CartItem> cartItems = cartItemRepository.findByUserId(userId);
+        cartItemRepository.deleteAll(cartItems);
+    }
 }
