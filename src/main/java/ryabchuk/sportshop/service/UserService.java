@@ -1,5 +1,6 @@
 package ryabchuk.sportshop.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -54,6 +55,7 @@ public class UserService {
         if (user.getResetTokenExpiry().isBefore(LocalDateTime.now())) {
             throw new IllegalArgumentException("Token expired");
         }
+
         user.setPassword(passwordEncoder.encode(newPassword));
         user.setResetToken(null);
         user.setResetTokenExpiry(null);
@@ -61,11 +63,34 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
+    }
+
     private void sendEmail(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
+
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
+
         mailSender.send(message);
+    }
+
+    public void updateUser(Long userId, UserDto userDto) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        if (!user.getEmail().equals(userDto.getEmail())) {
+            if (userRepository.existsByEmail(userDto.getEmail())) {
+                throw new IllegalArgumentException("Email is already in use");
+            }
+            user.setEmail(userDto.getEmail());
+        }
+
+        if (userDto.getPassword() != null && !userDto.getPassword().isBlank()) {
+            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        }
+
+        userRepository.save(user);
     }
 }
