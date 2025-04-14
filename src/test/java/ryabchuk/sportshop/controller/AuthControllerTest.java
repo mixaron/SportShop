@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import ryabchuk.sportshop.controller.auth.AuthController;
 import ryabchuk.sportshop.dto.UserDto;
 import ryabchuk.sportshop.service.UserService;
 

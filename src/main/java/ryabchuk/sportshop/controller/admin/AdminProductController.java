@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ryabchuk.sportshop.config.CustomUserDetails;
+import ryabchuk.sportshop.config.user.CustomUserDetails;
 import ryabchuk.sportshop.model.Product;
 import ryabchuk.sportshop.service.CategoryService;
 import ryabchuk.sportshop.service.ProductService;
@@ -40,8 +40,7 @@ public class AdminProductController {
                                 @RequestParam Long categoryId,
                                 @RequestParam("imageFile") MultipartFile imageFile,
                                 @AuthenticationPrincipal CustomUserDetails userDetails) throws IOException {
-        Long createdById = userDetails.getId();
-        productService.createProduct(product, categoryId, createdById, imageFile);
+        productService.createProduct(product, categoryId, userDetails.getId(), imageFile);
         return "redirect:/admin/products";
     }
 
