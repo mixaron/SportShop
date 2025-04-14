@@ -6,9 +6,8 @@ import ryabchuk.sportshop.model.Product;
 
 import java.util.List;
 
+@Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByCategoryId(Long categoryId);
     List<Product> findByNameContainingIgnoreCase(String name);
-    List<Product> findByStatus(Product.Status status);
-    List<Product> findByCreatedById(Long userId);
 }

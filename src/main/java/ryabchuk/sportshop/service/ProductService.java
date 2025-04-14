@@ -2,7 +2,6 @@ package ryabchuk.sportshop.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ryabchuk.sportshop.model.Category;
@@ -39,7 +38,7 @@ public class ProductService {
         return productRepository.findByCategoryId(categoryId);
     }
 
-    public Product createProduct(Product product, Long categoryId, Long createdById, MultipartFile imageFile) throws IOException {
+    public void createProduct(Product product, Long categoryId, Long createdById, MultipartFile imageFile) throws IOException {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new EntityNotFoundException("Category not found"));
         User createdBy = userRepository.findById(createdById)
@@ -49,7 +48,7 @@ public class ProductService {
         if (imageFile != null && !imageFile.isEmpty()) {
             product.setImage(imageFile.getBytes());
         }
-        return productRepository.save(product);
+        productRepository.save(product);
     }
 
     public void updateProduct(Long id, Product updated, Long categoryId, MultipartFile imageFile) throws IOException {
@@ -61,7 +60,6 @@ public class ProductService {
         product.setName(updated.getName());
         product.setPrice(updated.getPrice());
         product.setCategory(updated.getCategory());
-        product.setStatus(updated.getStatus());
         product.setCategory(category);
         if (imageFile != null && !imageFile.isEmpty()) {
             product.setImage(imageFile.getBytes());

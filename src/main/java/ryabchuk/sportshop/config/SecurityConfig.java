@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import ryabchuk.sportshop.config.user.CustomOAuth2UserService;
 import ryabchuk.sportshop.handler.CustomAuthenticationFailureHandler;
 import ryabchuk.sportshop.handler.CustomAuthenticationSuccessHandler;
 
