@@ -1,20 +1,25 @@
-package ryabchuk.sportshop.controller;
+package ryabchuk.sportshop.controller.product;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ryabchuk.sportshop.config.user.CustomUserDetails;
 import ryabchuk.sportshop.model.Product;
+import ryabchuk.sportshop.model.Review;
 import ryabchuk.sportshop.service.CategoryService;
+import ryabchuk.sportshop.service.OrderItemService;
 import ryabchuk.sportshop.service.ProductService;
+import ryabchuk.sportshop.service.ReviewService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/products")
@@ -22,6 +27,8 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
     private final CategoryService categoryService;
+    private final OrderItemService orderItemService;
+    private final ReviewService reviewService;
 
     @GetMapping
     public String listProducts(@RequestParam(required = false) Long categoryId,
@@ -37,11 +44,24 @@ public class ProductController {
         return "products/list";
     }
 
-    @GetMapping("/{id}")
-    public String viewProduct(@PathVariable Long id, Model model) {
-        model.addAttribute("product", productService.getProductById(id));
+    @GetMapping("/{productId}")
+    public String viewProduct(@AuthenticationPrincipal CustomUserDetails userDetails,
+                              @PathVariable Long productId, Model model) {
+
+        Product product = productService.getProductById(productId);
+        model.addAttribute("product", product);
+
+        boolean isUserBuy = orderItemService.isUserBuyProduct(userDetails.getId(), productId);
+        model.addAttribute("isUserBuy", isUserBuy);
+
+        Optional<Review> userReview = reviewService.findUserReviewForProduct(userDetails.getId(), productId);
+        model.addAttribute("hasUserReview", userReview.isPresent());
+        model.addAttribute("userReview", userReview.orElse(new Review()));
+        model.addAttribute("review", new Review());
+
         return "products/view";
     }
+
 
     @GetMapping("/{id}/image")
     public ResponseEntity<byte[]> getProductImage(@PathVariable Long id) {

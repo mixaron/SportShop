@@ -1,19 +1,15 @@
-package ryabchuk.sportshop.controller;
+package ryabchuk.sportshop.controller.product;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import ryabchuk.sportshop.config.CustomUserDetails;
+import org.springframework.web.bind.annotation.*;
+import ryabchuk.sportshop.config.user.CustomUserDetails;
 import ryabchuk.sportshop.service.CartService;
-import ryabchuk.sportshop.service.UserService;
+
+import java.util.Map;
 
 @Controller
 @RequestMapping("/cart")
@@ -24,18 +20,19 @@ public class CartController {
 
     @GetMapping
     public String viewCart(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        Long userId = userDetails.getId();
-        model.addAttribute("cartItems", cartService.getCart(userId));
+        model.addAttribute("cartItems", cartService.getCart(userDetails.getId()));
         return "cart/view";
     }
 
     @PostMapping("/add")
-    public String addToCart(@RequestParam Long productId,
-                            @RequestParam int quantity,
-                            @AuthenticationPrincipal CustomUserDetails userDetails) {
+    @ResponseBody
+    public Map<String, String> addToCart(@RequestParam Long productId,
+                                         @RequestParam int quantity,
+                                         @AuthenticationPrincipal CustomUserDetails userDetails) {
         cartService.addToCart(userDetails.getId(), productId, quantity);
-        return "redirect:/cart";
+        return Map.of("status", "success", "message", "Товар добавлен в корзину");
     }
+
 
     @PostMapping("/update")
     public String updateCart(@RequestParam Long productId,

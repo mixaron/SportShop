@@ -1,4 +1,4 @@
-package ryabchuk.sportshop.controller;
+package ryabchuk.sportshop.controller.auth;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

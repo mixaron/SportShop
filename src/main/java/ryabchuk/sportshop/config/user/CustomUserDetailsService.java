@@ -1,4 +1,4 @@
-package ryabchuk.sportshop.config;
+package ryabchuk.sportshop.config.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
