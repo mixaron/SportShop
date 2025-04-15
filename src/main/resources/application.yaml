@@ -8,7 +8,6 @@ spring:
     password: 156tYPRRrl1YCoNQV0UPQTBHSGvRsg3L
   jpa:
     show-sql: true
-    ddl-auto: update
   security:
     oauth2:
       client:
