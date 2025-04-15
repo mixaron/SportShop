@@ -43,6 +43,10 @@ spring:
     redis:
       host: localhost
       port: 6379
+  thymeleaf:
+    cache: true
+  reset:
+    password-link: http://localhost:8989/auth/reset-password?token
 
 server:
   port: 8989

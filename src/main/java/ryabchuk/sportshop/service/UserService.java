@@ -2,6 +2,8 @@ package ryabchuk.sportshop.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,12 +18,15 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final JavaMailSender mailSender;
+
+    @Value("${spring.reset.password-link}")
+    private String resetPasswordBaseLink;
 
     public void register(UserDto userDto) {
         if (userRepository.existsByEmail(userDto.getEmail())) {
@@ -44,7 +49,7 @@ public class UserService {
 
         userRepository.save(user);
 
-        String resetLink = "http://localhost:8989/auth/reset-password?token=" + token;
+        String resetLink = resetPasswordBaseLink + token;
         sendEmail(user.getEmail(), "Password Reset", "Click to reset: " + resetLink);
     }
 
