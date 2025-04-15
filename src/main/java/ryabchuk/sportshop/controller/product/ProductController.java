@@ -44,23 +44,32 @@ public class ProductController {
         return "products/list";
     }
 
-    @GetMapping("/{productId}")
-    public String viewProduct(@AuthenticationPrincipal CustomUserDetails userDetails,
-                              @PathVariable Long productId, Model model) {
+@GetMapping("/{productId}")
+public String viewProduct(@AuthenticationPrincipal CustomUserDetails userDetails,
+                         @PathVariable Long productId, Model model) {
+    
+    Product product = productService.getProductById(productId);
+    model.addAttribute("product", product);
 
-        Product product = productService.getProductById(productId);
-        model.addAttribute("product", product);
+    boolean isAuthenticated = userDetails != null;
+    model.addAttribute("isAuthenticated", isAuthenticated);
 
+    if (isAuthenticated) {
         boolean isUserBuy = orderItemService.isUserBuyProduct(userDetails.getId(), productId);
         model.addAttribute("isUserBuy", isUserBuy);
 
         Optional<Review> userReview = reviewService.findUserReviewForProduct(userDetails.getId(), productId);
         model.addAttribute("hasUserReview", userReview.isPresent());
         model.addAttribute("userReview", userReview.orElse(new Review()));
-        model.addAttribute("review", new Review());
-
-        return "products/view";
+    } else {
+        model.addAttribute("isUserBuy", false);
+        model.addAttribute("hasUserReview", false);
     }
+
+    model.addAttribute("review", new Review());
+
+    return "products/view";
+}
 
 
     @GetMapping("/{id}/image")
