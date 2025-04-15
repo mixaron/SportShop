@@ -3,9 +3,9 @@ spring:
     name: SportShop
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/course
-    username: postgres
-    password: 123123
+    url: jdbc:postgresql://dpg-cvv0rdre5dus73e4lq50-a:5432/course_qmpz
+    username: postgress
+    password: 156tYPRRrl1YCoNQV0UPQTBHSGvRsg3L
   jpa:
     show-sql: true
   security:
