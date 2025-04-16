@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import ryabchuk.sportshop.model.User;
 import ryabchuk.sportshop.repository.UserRepository;
 
+import java.util.Map;
+
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
@@ -18,7 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByEmail(name)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        return new CustomUserDetails(user);
+        return new CustomUserDetails(user, Map.of());
     }
 
 }

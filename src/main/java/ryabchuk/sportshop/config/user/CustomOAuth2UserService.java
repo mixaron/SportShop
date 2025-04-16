@@ -61,11 +61,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             userRepository.save(user);
         }
 
-        return new DefaultOAuth2User(
-                Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole())),
-                oauthUser.getAttributes(),
-                getNameAttributeKey(provider, oauthUser)
-        );
+        return new CustomUserDetails(user, oauthUser.getAttributes());
     }
     private String getNameAttributeKey(String provider, OAuth2User user) {
         return switch (provider) {
