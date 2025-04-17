@@ -1,10 +1,10 @@
 package ryabchuk.sportshop.dto;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ryabchuk.sportshop.model.Address;
 
 @Getter
 @Setter
@@ -21,4 +21,6 @@ public class UserDto {
     private String firstName;
 
     private String lastName;
+
+    private Address address;
 }

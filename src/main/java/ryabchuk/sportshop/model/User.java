@@ -26,6 +26,10 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id", nullable = false, unique = true)
+    private Address address;
+
     private String provider;
 
     @Column(name = "provider_id")
