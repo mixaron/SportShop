@@ -20,13 +20,13 @@ public class UserController {
 
     @GetMapping
     public String viewProfile(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
-        model.addAttribute("user", userService.getUserById(userDetails.getId()));
+        model.addAttribute("user", userService.getUserDtoById(userDetails.getId()));
         return "profile/view";
     }
 
     @GetMapping("/edit")
     public String editUser(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
-        model.addAttribute("user", userService.getUserById(userDetails.getId()));
+        model.addAttribute("user", userService.getUserDtoById(userDetails.getId()));
         return "profile/edit";
     }
 

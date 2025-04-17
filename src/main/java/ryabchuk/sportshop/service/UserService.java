@@ -72,6 +72,11 @@ public class UserService {
         return userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 
+    public UserDto getUserDtoById(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        return userMapper.toDto(user);
+    }
+
     private void sendEmail(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
 
@@ -103,6 +108,9 @@ public class UserService {
 
     private void updatePasswordIfChanged(User user, UserDto userDto) {
         if (userDto.getPassword() != null && !userDto.getPassword().isBlank()) {
+            if (!passwordEncoder.matches(user.getPassword(), userDto.getCurrentPassword())) {
+                throw new IllegalArgumentException("Password not the same");
+            }
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         }
     }
