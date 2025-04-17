@@ -11,16 +11,26 @@
 
   <form th:action="@{/profile/edit}" method="post" th:object="${user}">
     <div class="mb-3">
-      <label for="email" class="form-label">Email</label>
+      <label for="email" class="form-label">Почта</label>
       <input type="email" th:field="*{email}" class="form-control" id="email" required>
     </div>
 
     <div class="mb-3">
-      <label for="password" class="form-label">Новый пароль</label>
+      <label for="password" class="form-label">Пароль</label>
       <input type="password" th:field="*{password}" class="form-control" id="password">
       <div class="form-text">Оставьте пустым, если не хотите менять пароль.</div>
     </div>
 
+    <div class="mb-3">
+      <label for="firstName" class="form-label">Имя</label>
+      <input type="text" th:field="*{firstName}" class="form-control" id="firstname">
+      <div class="form-text">Оставьте пустым, если не хотите менять пароль.</div>
+    </div>
+    <div class="mb-3">
+      <label for="lastname" class="form-label">Фамилия</label>
+      <input type="text" th:field="*{lastName}" class="form-control" id="lastname">
+      <div class="form-text">Оставьте пустым, если не хотите менять пароль.</div>
+    </div>
     <button type="submit" class="btn btn-primary">Сохранить изменения</button>
     <a th:href="@{/profile}" class="btn btn-secondary">Назад</a>
   </form>
