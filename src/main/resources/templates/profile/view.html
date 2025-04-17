@@ -11,14 +11,16 @@
 
   <div class="card">
     <div class="card-body">
-      <p><strong>Email:</strong> <span th:text="${user.email}">email@example.com</span></p>
+      <p><strong>Почта:</strong> <span th:text="${user.email}">email@example.com</span></p>
+      <p><strong>Имя:</strong> <span th:text="${user.firstName}">firstname</span></p>
+      <p><strong>Email:</strong> <span th:text="${user.lastName}">lastname</span></p>
       <p><strong>Дата регистрации:</strong>
         <span th:text="${#temporals.format(user.createdAt, 'dd.MM.yyyy HH:mm')}">01.01.2024</span>
       </p>
     </div>
   </div>
   <div class="mt-4">
-    <a href="/profile/edit" class="btn btn-outline-primary">Поменять пароль</a>
+    <a href="/profile/edit" class="btn btn-outline-primary">Редактировать данные</a>
     <a href="/order" class="btn btn-outline-primary">Мои заказы</a>
   </div>
 </div>
