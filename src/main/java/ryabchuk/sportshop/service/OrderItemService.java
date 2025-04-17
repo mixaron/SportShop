@@ -12,7 +12,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderItemService {
     private final OrderItemRepository orderItemRepository;
-    private final OrderService orderService;
 
     public boolean isUserBuyProduct(Long userId, Long productId) {
         List<OrderItem> orderItems = orderItemRepository.findAllByProductId(productId);
