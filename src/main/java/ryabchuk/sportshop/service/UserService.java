@@ -85,17 +85,30 @@ public class UserService {
     public void updateUser(Long userId, UserDto userDto) {
         User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
 
+        updateEmailIfChanged(user, userDto);
+        updatePasswordIfChanged(user, userDto);
+        updateName(user, userDto);
+
+        userRepository.save(user);
+    }
+
+    private void updateEmailIfChanged(User user, UserDto userDto) {
         if (!user.getEmail().equals(userDto.getEmail())) {
             if (userRepository.existsByEmail(userDto.getEmail())) {
                 throw new IllegalArgumentException("Email is already in use");
             }
             user.setEmail(userDto.getEmail());
         }
+    }
 
+    private void updatePasswordIfChanged(User user, UserDto userDto) {
         if (userDto.getPassword() != null && !userDto.getPassword().isBlank()) {
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         }
+    }
 
-        userRepository.save(user);
+    private void updateName(User user, UserDto userDto) {
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
     }
 }
