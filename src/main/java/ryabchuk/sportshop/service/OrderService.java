@@ -23,6 +23,7 @@ public class OrderService {
     public List<Order> getOrdersByUserId(Long userId) {
         return orderRepository.findAllByUserId(userId);
     }
+
     @Transactional
     public void createFakeOrder(Long userId) {
         User user  = userService.getUserById(userId);
