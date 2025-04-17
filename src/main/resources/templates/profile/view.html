@@ -13,9 +13,22 @@
     <div class="card-body">
       <p><strong>Почта:</strong> <span th:text="${user.email}">email@example.com</span></p>
       <p><strong>Имя:</strong> <span th:text="${user.firstName}">firstname</span></p>
-      <p><strong>Email:</strong> <span th:text="${user.lastName}">lastname</span></p>
+      <p><strong>Фамилия:</strong> <span th:text="${user.lastName}">lastname</span></p>
+
+      <hr>
+      <h5>Адрес</h5>
+      <div th:if="${user.address != null}">
+        <p><strong>Регион:</strong> <span th:text="${user.address.region}">Регион</span></p>
+        <p><strong>Город:</strong> <span th:text="${user.address.city}">Город</span></p>
+        <p><strong>Улица:</strong> <span th:text="${user.address.street}">Улица</span></p>
+        <p><strong>Дом:</strong> <span th:text="${user.address.house}">Дом</span></p>
+        <p><strong>Квартира:</strong> <span th:text="${user.address.apartment}">Кв.</span></p>
+        <p><strong>Почтовый индекс:</strong> <span th:text="${user.address.postalCode}">000000</span></p>
+      </div>
+      <div th:unless="${user.address != null}" class="text-muted">Адрес не указан</div>
     </div>
   </div>
+
   <div class="mt-4">
     <a href="/profile/edit" class="btn btn-outline-primary">Редактировать данные</a>
     <a href="/order" class="btn btn-outline-primary">Мои заказы</a>

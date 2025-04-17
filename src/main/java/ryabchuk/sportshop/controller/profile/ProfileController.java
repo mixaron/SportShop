@@ -1,4 +1,4 @@
-package ryabchuk.sportshop.controller.user;
+package ryabchuk.sportshop.controller.profile;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,7 +15,7 @@ import ryabchuk.sportshop.service.UserService;
 @Controller
 @RequestMapping("/profile")
 @RequiredArgsConstructor
-public class UserController {
+public class ProfileController {
     private final UserService userService;
 
     @GetMapping
