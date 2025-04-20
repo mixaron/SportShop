@@ -26,8 +26,7 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id", nullable = false, unique = true)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Address address;
 
     private String provider;
