@@ -3,6 +3,7 @@ package ryabchuk.sportshop.service;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ryabchuk.sportshop.dto.AddressDto;
 import ryabchuk.sportshop.mapper.AddressMapper;
 import ryabchuk.sportshop.model.Address;
@@ -18,31 +19,35 @@ public class AddressService {
 
     public void addAddress(AddressDto addressDto, Long userId) {
         if (addressRepository.existsByUserId(userId)) {
-            throw new IllegalArgumentException("User already have address");
+            throw new IllegalArgumentException("User already has address");
         }
-        Address address = addressMapper.toEntity(addressDto);
-        User user  = userService.getUserById(userId);
-        address.setUser(user);
 
-        addressRepository.save(address);
+        Address address = addressMapper.toEntity(addressDto);
+        User user = userService.getUserById(userId);
+
+        address.setUser(user);
+        user.setAddress(address);
+        userService.saveUser(user);
     }
+
 
     public void editAddress(AddressDto addressDto, Long userId) {
         Address address = addressRepository.findByUserId(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Address not found"));
 
-        address.setApartment(addressDto.getApartment());
-        address.setCity(addressDto.getCity());
-        address.setHouse(addressDto.getHouse());
-        address.setStreet(addressDto.getStreet());
-        address.setPostalCode(addressDto.getPostalCode());
-        address.setRegion(addressDto.getRegion());
-
+        updateAddressFromDto(address, addressDto);
         addressRepository.save(address);
     }
 
-    public void deleteAddress(Long id) {
-        addressRepository.deleteById(id);
+    @Transactional
+    public void deleteAddressByUserId(Long userId) {
+        Address address = addressRepository.findByUserId(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Address not found"));
+
+        User user = address.getUser();
+        user.setAddress(null);
+
+        addressRepository.delete(address);
     }
 
     public AddressDto getAddress(Long userId) {
@@ -50,4 +55,14 @@ public class AddressService {
                 .orElseThrow(() -> new EntityNotFoundException("Address not found"));
         return addressMapper.toDto(address);
     }
+
+    private void updateAddressFromDto(Address address, AddressDto dto) {
+        address.setApartment(dto.getApartment());
+        address.setCity(dto.getCity());
+        address.setHouse(dto.getHouse());
+        address.setStreet(dto.getStreet());
+        address.setPostalCode(dto.getPostalCode());
+        address.setRegion(dto.getRegion());
+    }
+
 }
