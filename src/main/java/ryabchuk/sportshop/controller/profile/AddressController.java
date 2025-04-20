@@ -15,28 +15,35 @@ import ryabchuk.sportshop.service.AddressService;
 public class AddressController {
     private final AddressService addressService;
 
-    @GetMapping
-    public String viewAddress(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        model.addAttribute("address", addressService.getAddress(customUserDetails.getId()));
-        return "address/view";
-    }
-
     @GetMapping("/create")
-    public String createAddressView(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        model.addAttribute("address", addressService.getAddress(customUserDetails.getId()));
-        return "address/edit";
+    public String createAddressView(Model model) {
+        model.addAttribute("address", new AddressDto());
+        return "address/create";
     }
 
     @PostMapping("/create")
     public String createAddress(@ModelAttribute AddressDto addressDto,
                                 @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         addressService.addAddress(addressDto, customUserDetails.getId());
-        return "redirect:/profile/address";
+        return "redirect:/profile";
     }
 
-    @PostMapping("/{id}/delete")
-    public String deleteAddress(@PathVariable Long id) {
-        addressService.deleteAddress(id);
-        return "redirect:/admin/categories";
+    @PostMapping("/delete")
+    public String deleteAddress(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        addressService.deleteAddressByUserId(customUserDetails.getId());
+        return "redirect:/profile";
+    }
+
+    @GetMapping("/edit")
+    public String editAddressPage(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        model.addAttribute("addressDto", addressService.getAddress(customUserDetails.getId()));
+        return "address/edit";
+    }
+
+    @PostMapping("/edit")
+    public String editAddress(@ModelAttribute AddressDto addressDto,
+                              @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        addressService.editAddress(addressDto, customUserDetails.getId());
+        return "redirect:/profile";
     }
 }
