@@ -17,15 +17,24 @@
 
       <hr>
       <h5>Адрес</h5>
-      <div th:if="${user.address != null}">
+      <div th:if="${user.getAddress() != null}">
         <p><strong>Регион:</strong> <span th:text="${user.address.region}">Регион</span></p>
         <p><strong>Город:</strong> <span th:text="${user.address.city}">Город</span></p>
         <p><strong>Улица:</strong> <span th:text="${user.address.street}">Улица</span></p>
         <p><strong>Дом:</strong> <span th:text="${user.address.house}">Дом</span></p>
         <p><strong>Квартира:</strong> <span th:text="${user.address.apartment}">Кв.</span></p>
         <p><strong>Почтовый индекс:</strong> <span th:text="${user.address.postalCode}">000000</span></p>
+        <a th:href="@{/profile/address/edit}" class="btn btn-primary">Изменить адрес</a>
+        <form th:action="@{/profile/address/delete}" method="post" class="mt-3">
+          <button type="submit" class="btn btn-danger"
+                  onclick="return confirm('Вы уверены, что хотите удалить адрес?')">
+            Удалить адрес
+          </button>
+        </form>
       </div>
-      <div th:unless="${user.address != null}" class="text-muted">Адрес не указан</div>
+      <div th:if="${user.getAddress() == null}" class="text-muted">
+        <a href="/profile/address/create" class="btn btn-outline-primary">Добавить адрес</a>
+      </div>
     </div>
   </div>
 
