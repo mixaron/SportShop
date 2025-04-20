@@ -119,4 +119,8 @@ public class UserService {
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
     }
+
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
 }
