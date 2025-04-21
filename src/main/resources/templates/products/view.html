@@ -21,25 +21,25 @@
 
   <h3>Отзывы</h3>
 
-  <div th:if="${product.reviews != null and !product.reviews.empty}">
-    <div th:each="review : ${product.reviews}" class="mb-2 border rounded p-2">
+  <div th:if="${approvedReviews != null and !approvedReviews.isEmpty}">
+    <div th:each="review : ${approvedReviews}" class="mb-2 border rounded p-2">
       <p><strong>Пользователь написал:</strong></p>
       <p th:text="${review.comment}"></p>
       <small class="text-muted">
-        Оценка: <span th:text="${review.rating}"></span> ★ | 
+        Оценка: <span th:text="${review.rating}"></span> ★ |
         <span th:text="${#temporals.format(review.createdAt, 'dd.MM.yyyy HH:mm')}"></span>
       </small>
     </div>
   </div>
-  <div th:if="${product.reviews == null or product.reviews.empty}" class="alert alert-info">
+  <div th:if="${approvedReviews == null or approvedReviews.isEmpty()}" class="alert alert-info">
     Пока нет отзывов об этом товаре.
   </div>
 
-  <!-- Блок для аутентифицированных пользователей -->
   <div th:if="${isAuthenticated}">
     <div th:if="${isUserBuy}">
       <hr>
       <div th:if="${hasUserReview}">
+        <p th:text="'Статус отзыва: ' + ${userReview.status.label}"></p>
         <h4>Редактировать отзыв</h4>
         <form th:action="@{/review/edit}" th:object="${userReview}" method="post">
           <input type="hidden" name="productId" th:value="${product.id}" />
@@ -89,7 +89,6 @@
     </div>
   </div>
 
-  <!-- Блок для неаутентифицированных пользователей -->
   <div th:unless="${isAuthenticated}" class="alert alert-info mt-4">
     <a th:href="@{/auth/login}" class="alert-link">Войдите</a>, чтобы оставлять отзывы.
     Ещё нет аккаунта? <a th:href="@{/auth/register}" class="alert-link">Зарегистрируйтесь</a>.
