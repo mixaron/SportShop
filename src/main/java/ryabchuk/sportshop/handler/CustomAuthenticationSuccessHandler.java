@@ -37,8 +37,10 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
         boolean isAdmin = authorities.stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
         boolean isModerator = authorities.stream().anyMatch(a -> a.getAuthority().equals("ROLE_MODERATOR"));
 
-        if (isAdmin || isModerator) {
+        if (isAdmin) {
             setDefaultTargetUrl("/admin");
+        } else if (isModerator) {
+            setDefaultTargetUrl("/moderator");
         } else {
             setDefaultTargetUrl("/products");
         }
