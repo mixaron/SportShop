@@ -1,7 +1,6 @@
 package ryabchuk.sportshop.service;
 
 import jakarta.persistence.EntityNotFoundException;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -9,12 +8,14 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ryabchuk.sportshop.dto.UserDto;
 import ryabchuk.sportshop.mapper.UserMapper;
 import ryabchuk.sportshop.model.User;
 import ryabchuk.sportshop.repository.UserRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -122,5 +123,23 @@ public class UserService {
 
     public void saveUser(User user) {
         userRepository.save(user);
+    }
+
+    public List<UserDto> getAllUsersDto() {
+        List<User> users = userRepository.findAll();
+        return userMapper.toDtoList(users);
+    }
+
+    public void changeRole(String email, User.Role role) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("User with this email not found"));
+
+        user.setRole(role);
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public void deleteUserByEmail(String email) {
+        userRepository.deleteByEmail(email);
     }
 }
