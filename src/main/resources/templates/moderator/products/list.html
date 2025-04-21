@@ -8,7 +8,7 @@
 <th:block th:replace="~{header :: header}"/>
 <div class="container mt-5">
     <h1>Управление товарами</h1>
-    <a th:href="@{/admin/products/create}" class="btn btn-primary mb-3">Добавить товар</a>
+    <a th:href="@{/moderator/products/create}" class="btn btn-primary mb-3">Добавить товар</a>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -37,8 +37,8 @@
             <td th:text="${#temporals.format(product.createdAt, 'dd.MM.yyyy HH:mm')}"></td>
             <td th:text="${product.description}"></td>
             <td>
-                <a th:href="@{/admin/products/{id}/edit(id=${product.id})}" class="btn btn-warning btn-sm">Редактировать</a>
-                <form th:action="@{/admin/products/{id}/delete(id=${product.id})}" method="post" class="d-inline">
+                <a th:href="@{/moderator/products/{id}/edit(id=${product.id})}" class="btn btn-warning btn-sm">Редактировать</a>
+                <form th:action="@{/moderator/products/{id}/delete(id=${product.id})}" method="post" class="d-inline">
                     <button type="submit" class="btn btn-danger btn-sm"
                             onclick="return confirm('Удалить товар?')">Удалить</button>
                 </form>

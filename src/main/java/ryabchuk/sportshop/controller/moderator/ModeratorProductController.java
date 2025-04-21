@@ -1,4 +1,4 @@
-package ryabchuk.sportshop.controller.admin;
+package ryabchuk.sportshop.controller.moderator;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,9 +14,9 @@ import ryabchuk.sportshop.service.ProductService;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/admin/products")
+@RequestMapping("/moderator/products")
 @AllArgsConstructor
-public class AdminProductController {
+public class ModeratorProductController {
 
     private final ProductService productService;
     private final CategoryService categoryService;
@@ -25,14 +25,14 @@ public class AdminProductController {
     @GetMapping
     public String listProducts(Model model) {
         model.addAttribute("products", productService.getAllProducts());
-        return "admin/products/list";
+        return "moderator/products/list";
     }
 
     @GetMapping("/create")
     public String createProductForm(Model model) {
         model.addAttribute("product", new Product());
         model.addAttribute("categories", categoryService.getAllCategories());
-        return "admin/products/form";
+        return "moderator/products/form";
     }
 
     @PostMapping
@@ -41,14 +41,14 @@ public class AdminProductController {
                                 @RequestParam("imageFile") MultipartFile imageFile,
                                 @AuthenticationPrincipal CustomUserDetails userDetails) throws IOException {
         productService.createProduct(product, categoryId, userDetails.getId(), imageFile);
-        return "redirect:/admin/products";
+        return "redirect:/moderator/products";
     }
 
     @GetMapping("/{id}/edit")
     public String editProductForm(@PathVariable Long id, Model model) {
         model.addAttribute("product", productService.getProductById(id));
         model.addAttribute("categories", categoryService.getAllCategories());
-        return "admin/products/form";
+        return "moderator/products/form";
     }
 
     @PostMapping("/{id}")
@@ -57,13 +57,13 @@ public class AdminProductController {
                                 @RequestParam Long categoryId,
                                 @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
         productService.updateProduct(id, product, categoryId, imageFile);
-        return "redirect:/admin/products";
+        return "redirect:/moderator/products";
     }
 
 
     @PostMapping("/{id}/delete")
     public String deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
-        return "redirect:/admin/products";
+        return "redirect:/moderator/products";
     }
 }

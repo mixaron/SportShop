@@ -1,4 +1,4 @@
-package ryabchuk.sportshop.controller.admin;
+package ryabchuk.sportshop.controller.moderator;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -8,32 +8,32 @@ import ryabchuk.sportshop.model.Category;
 import ryabchuk.sportshop.service.CategoryService;
 
 @Controller
-@RequestMapping("/admin/categories")
+@RequestMapping("/moderator/categories")
 @AllArgsConstructor
-public class AdminCategoryController {
+public class ModeratorCategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
     public String listCategories(Model model) {
         model.addAttribute("categories", categoryService.getAllCategories());
-        return "admin/categories/list";
+        return "moderator/categories/list";
     }
 
     @GetMapping("/create")
     public String createCategoryForm(Model model) {
         model.addAttribute("category", new Category());
-        return "admin/categories/form";
+        return "moderator/categories/form";
     }
 
     @PostMapping
     public String createCategory(@ModelAttribute Category category) {
         categoryService.createCategory(category);
-        return "redirect:/admin/categories";
+        return "redirect:/moderator/categories";
     }
 
     @PostMapping("/{id}/delete")
     public String deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
-        return "redirect:/admin/categories";
+        return "redirect:/moderator/categories";
     }
 }

@@ -8,7 +8,7 @@
 <th:block th:replace="~{header :: header}"/>
 <div class="container mt-5">
     <h1>Управление категориями</h1>
-    <a th:href="@{/admin/categories/create}" class="btn btn-primary mb-3">Добавить категорию</a>
+    <a th:href="@{/moderator/categories/create}" class="btn btn-primary mb-3">Добавить категорию</a>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -23,7 +23,7 @@
             <td th:text="${category.name}"></td>
             <td th:text="${category.description}"></td>
             <td>
-                <form th:action="@{/admin/categories/{id}/delete(id=${category.id})}" method="post" class="d-inline">
+                <form th:action="@{/moderator/categories/{id}/delete(id=${category.id})}" method="post" class="d-inline">
                     <button type="submit" class="btn btn-danger btn-sm"
                             onclick="return confirm('Удалить категорию?')">Удалить</button>
                 </form>
