@@ -8,6 +8,7 @@ import ryabchuk.sportshop.model.Review;
 import ryabchuk.sportshop.model.User;
 import ryabchuk.sportshop.repository.ReviewRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,6 +32,7 @@ public class ReviewService {
 
         existingReview.setRating(review.getRating());
         existingReview.setComment(review.getComment());
+        existingReview.setStatus(Review.Status.PROCESSING);
 
         reviewRepository.save(existingReview);
     }
@@ -42,5 +44,21 @@ public class ReviewService {
     public void deleteReview(Long userId, Long productId) {
         Optional<Review> review = reviewRepository.findByUserIdAndProductId(userId, productId);
         review.ifPresent(reviewRepository::delete);
+    }
+
+    public List<Review> getAllProcessingReviews() {
+        return reviewRepository.findAllByStatus(Review.Status.PROCESSING);
+    }
+
+    public void changeStatus(Long reviewId, Review.Status status) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new EntityNotFoundException("Review not found"));
+        review.setStatus(status);
+
+        reviewRepository.save(review);
+    }
+
+    public List<Review> getApprovedReviewsByProduct(Long productId) {
+        return reviewRepository.findAllByProductIdAndStatus(productId, Review.Status.APPROVED);
     }
 }
