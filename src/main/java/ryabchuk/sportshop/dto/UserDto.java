@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ryabchuk.sportshop.model.Address;
+import ryabchuk.sportshop.model.User;
 
 @Getter
 @Setter
@@ -23,4 +24,6 @@ public class UserDto {
     private String lastName;
 
     private Address address;
+
+    private User.Role role;
 }

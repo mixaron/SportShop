@@ -2,6 +2,7 @@ package ryabchuk.sportshop.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -50,8 +51,14 @@ public class User {
     @Column(name = "reset_token_expiry")
     private LocalDateTime resetTokenExpiry;
 
+    @Getter
+    @RequiredArgsConstructor
     public enum Role {
-        USER, MODERATOR, ADMIN
+        USER("Пользователь"),
+            MODERATOR("Модератор"),
+        ADMIN("Администратор");
+
+        private final String label;
     }
 
 }
