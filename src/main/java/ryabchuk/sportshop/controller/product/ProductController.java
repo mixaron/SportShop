@@ -51,6 +51,8 @@ public String viewProduct(@AuthenticationPrincipal CustomUserDetails userDetails
     Product product = productService.getProductById(productId);
     model.addAttribute("product", product);
 
+    model.addAttribute("approvedReviews", reviewService.getApprovedReviewsByProduct(productId));
+    
     boolean isAuthenticated = userDetails != null;
     model.addAttribute("isAuthenticated", isAuthenticated);
 
