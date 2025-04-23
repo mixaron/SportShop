@@ -1,6 +1,9 @@
 package ryabchuk.sportshop.model.product;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import ryabchuk.sportshop.model.user.User;
@@ -18,7 +21,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Название обязательно")
     private String name;
 
     private String description;
@@ -27,14 +30,15 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @Column(nullable = false)
+    @NotNull(message = "Цена обязательна")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Цена должна быть больше 0")
     private BigDecimal price;
 
-    @Column(columnDefinition = "BYTEA")
+    @NotNull(message = "Фотография обязательна")
     private byte[] image;
 
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Status status = Status.PENDING;
 
     @ManyToOne(optional = false)
@@ -50,6 +54,4 @@ public class Product {
     public enum Status {
         PENDING, APPROVED, REJECTED
     }
-
 }
-

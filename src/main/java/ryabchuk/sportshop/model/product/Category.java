@@ -1,6 +1,7 @@
 package ryabchuk.sportshop.model.product;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Название категории обязательно")
     @Column(nullable = false, unique = true)
     private String name;
 
@@ -26,5 +28,4 @@ public class Category {
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
-
 }

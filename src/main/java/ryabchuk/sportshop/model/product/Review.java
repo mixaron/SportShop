@@ -1,6 +1,9 @@
 package ryabchuk.sportshop.model.product;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -16,20 +19,23 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Product product;
 
+    @Min(value = 1, message = "Оценка должна быть не меньше 1")
+    @Max(value = 5, message = "Оценка должна быть не больше 5")
     private int rating;
 
+    @NotBlank(message = "Комментарий обязателен")
     private String comment;
 
     private LocalDateTime createdAt;
 
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Status status = Status.PROCESSING;
 
     @PrePersist
@@ -47,4 +53,3 @@ public class Review {
         private final String label;
     }
 }
-
