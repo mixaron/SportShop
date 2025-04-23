@@ -1,9 +1,11 @@
 package ryabchuk.sportshop.controller.profile;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ryabchuk.sportshop.config.user.CustomUserDetails;
 import ryabchuk.sportshop.dto.AddressDto;
@@ -22,8 +24,13 @@ public class AddressController {
     }
 
     @PostMapping("/create")
-    public String createAddress(@ModelAttribute AddressDto addressDto,
+    public String createAddress(@ModelAttribute @Valid AddressDto addressDto,
+                                BindingResult result,
                                 @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        if (result.hasErrors()) {
+            return "address/create";
+        }
+
         addressService.addAddress(addressDto, customUserDetails.getId());
         return "redirect:/profile";
     }
@@ -41,8 +48,13 @@ public class AddressController {
     }
 
     @PatchMapping("/edit")
-    public String editAddress(@ModelAttribute AddressDto addressDto,
+    public String editAddress(@ModelAttribute @Valid AddressDto addressDto,
+                              BindingResult result,
                               @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        if (result.hasErrors()) {
+            return "address/edit";
+        }
+
         addressService.editAddress(addressDto, customUserDetails.getId());
         return "redirect:/profile";
     }

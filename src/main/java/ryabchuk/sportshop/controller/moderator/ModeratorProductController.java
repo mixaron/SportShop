@@ -1,9 +1,11 @@
 package ryabchuk.sportshop.controller.moderator;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ryabchuk.sportshop.config.user.CustomUserDetails;
@@ -36,10 +38,15 @@ public class ModeratorProductController {
     }
 
     @PostMapping
-    public String createProduct(@ModelAttribute Product product,
+    public String createProduct(@ModelAttribute @Valid Product product,
+                                BindingResult result,
                                 @RequestParam Long categoryId,
                                 @RequestParam("imageFile") MultipartFile imageFile,
                                 @AuthenticationPrincipal CustomUserDetails userDetails) throws IOException {
+        if (result.hasErrors()) {
+            return "moderator/products/form";
+        }
+
         productService.createProduct(product, categoryId, userDetails.getId(), imageFile);
         return "redirect:/moderator/products";
     }
@@ -53,9 +60,13 @@ public class ModeratorProductController {
 
     @PatchMapping("/{id}")
     public String updateProduct(@PathVariable Long id,
-                                @ModelAttribute Product product,
+                                @ModelAttribute @Valid Product product,
+                                BindingResult result,
                                 @RequestParam Long categoryId,
                                 @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
+        if (result.hasErrors()) {
+            return "moderator/products/form";
+        }
         productService.updateProduct(id, product, categoryId, imageFile);
         return "redirect:/moderator/products";
     }

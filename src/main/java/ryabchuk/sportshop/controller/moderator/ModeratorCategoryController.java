@@ -1,8 +1,10 @@
 package ryabchuk.sportshop.controller.moderator;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ryabchuk.sportshop.model.product.Category;
 import ryabchuk.sportshop.service.product.CategoryService;
@@ -26,8 +28,17 @@ public class ModeratorCategoryController {
     }
 
     @PostMapping
-    public String createCategory(@ModelAttribute Category category) {
-        categoryService.createCategory(category);
+    public String createCategory(@ModelAttribute @Valid Category category, BindingResult result) {
+        if (result.hasErrors()) {
+            return "moderator/categories/form";
+        }
+
+        try {
+            categoryService.createCategory(category);
+        } catch (IllegalArgumentException e) {
+            result.rejectValue("name", "error.category", e.getMessage());
+            return "moderator/categories/form";
+        }
         return "redirect:/moderator/categories";
     }
 
