@@ -28,13 +28,12 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
         String username = request.getParameter("username");
 
         if (username != null && loginAttemptService.isBlocked(username)) {
-            getRedirectStrategy().sendRedirect(request, response,
-                    "/auth/login?error=blocked");
+            getRedirectStrategy().sendRedirect(request, response, "/auth/login?error=blocked");
             return;
         }
 
         loginAttemptService.loginFailed(username);
-
-        super.onAuthenticationFailure(request, response, exception);
+        getRedirectStrategy().sendRedirect(request, response, "/auth/login?error=bad_credentials");
     }
+
 }
