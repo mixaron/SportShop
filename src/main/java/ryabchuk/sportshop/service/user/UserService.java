@@ -13,6 +13,8 @@ import ryabchuk.sportshop.dto.UserDto;
 import ryabchuk.sportshop.mapper.UserMapper;
 import ryabchuk.sportshop.model.user.User;
 import ryabchuk.sportshop.repository.user.UserRepository;
+import ryabchuk.sportshop.util.exception.EmailAlreadyUsedException;
+import ryabchuk.sportshop.util.exception.InvalidPasswordException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -89,7 +91,8 @@ public class UserService {
     }
 
     public void updateUser(Long userId, UserDto userDto) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Пользователь не найден"));
 
         updateEmailIfChanged(user, userDto);
         updatePasswordIfChanged(user, userDto);
@@ -101,7 +104,7 @@ public class UserService {
     private void updateEmailIfChanged(User user, UserDto userDto) {
         if (!user.getEmail().equals(userDto.getEmail())) {
             if (userRepository.existsByEmail(userDto.getEmail())) {
-                throw new IllegalArgumentException("Email is already in use");
+                throw new EmailAlreadyUsedException("Почта уже используется");
             }
             user.setEmail(userDto.getEmail());
         }
@@ -110,7 +113,7 @@ public class UserService {
     private void updatePasswordIfChanged(User user, UserDto userDto) {
         if (userDto.getPassword() != null && !userDto.getPassword().isBlank()) {
             if (!passwordEncoder.matches(user.getPassword(), userDto.getCurrentPassword())) {
-                throw new IllegalArgumentException("Password not the same");
+                throw new InvalidPasswordException("Пароли не одинаковые!");
             }
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         }
@@ -132,7 +135,7 @@ public class UserService {
 
     public void changeRole(String email, User.Role role) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException("User with this email not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Пользователь с такой почтой не найден"));
 
         user.setRole(role);
         userRepository.save(user);
