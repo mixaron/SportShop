@@ -4,8 +4,8 @@ import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ryabchuk.sportshop.model.Address;
-import ryabchuk.sportshop.model.User;
+import ryabchuk.sportshop.model.user.Address;
+import ryabchuk.sportshop.model.user.User;
 
 @Getter
 @Setter
@@ -26,4 +26,6 @@ public class UserDto {
     private Address address;
 
     private User.Role role;
+
+    private String telegramChatId;
 }

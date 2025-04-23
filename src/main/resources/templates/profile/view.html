@@ -35,9 +35,26 @@
       <div th:if="${user.getAddress() == null}" class="text-muted">
         <a href="/profile/address/create" class="btn btn-outline-primary">Добавить адрес</a>
       </div>
-    </div>
-  </div>
 
+      <hr>
+      <h5>Telegram</h5>
+
+      <div th:if="${user.telegramChatId != null}">
+        <p class="text-success">Телеграм-бот успешно привязан.</p>
+        <form th:if="${user.telegramChatId != null}" th:action="@{/telegram/unlink-telegram}" method="post">
+          <button type="submit" class="btn btn-warning">Отвязать Telegram</button>
+        </form>
+      </div>
+
+      <div th:if="${user.telegramChatId == null}">
+        <p>Чтобы получать уведомления в Telegram, откройте бота:</p>
+        <p><a href="https://t.me/sportshopcourse_bot" target="_blank">@sportshopcourse_bot</a></p>
+        <p>И отправьте команду:</p>
+        <pre>/link <span th:text="${user.email}">your@email.com</span></pre>
+      </div>
+    </div>
+    </div>
+    <hr>
   <div class="mt-4">
     <a href="/profile/edit" class="btn btn-outline-primary">Редактировать данные</a>
     <a href="/order" class="btn btn-outline-primary">Мои заказы</a>
