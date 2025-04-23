@@ -7,34 +7,39 @@
 <body>
 <div class="container mt-5">
 <th:block th:replace="~{header :: header}"/>
-  <form th:action="@{/profile/edit}" method="post" th:object="${user}">
+  <form th:action="@{/profile/edit}" method="post" th:object="${userDto}">
     <input type="hidden" name="_method" value="patch"/>
     <input type="hidden" name="_method" value="patch"/>
     <div class="mb-3">
       <label for="email" class="form-label">Почта</label>
       <input type="email" th:field="*{email}" class="form-control" id="email" required>
+        <div class="text-danger small" th:errors="*{email}"></div>
     </div>
 
     <div class="mb-3">
       <label for="password" class="form-label">Новый пароль</label>
       <input type="password" th:field="*{password}" class="form-control" id="password">
       <div class="form-text">Оставьте пустым, если не хотите менять пароль.</div>
+      <div class="text-danger small" th:errors="*{password}"></div>
     </div>
 
     <div class="mb-3">
       <label for="currentPassword" class="form-label">Текущий пароль</label>
       <input type="password" th:field="*{currentPassword}" class="form-control" id="currentPassword">
       <div class="form-text">Обязательно, если вы меняете email или пароль.</div>
+      <div class="text-danger small" th:errors="*{currentPassword}"></div>
     </div>
 
     <div class="mb-3">
       <label for="firstName" class="form-label">Имя</label>
       <input type="text" th:field="*{firstName}" class="form-control" id="firstName">
+      <div class="text-danger small" th:errors="*{firstName}"></div>
     </div>
 
     <div class="mb-3">
       <label for="lastName" class="form-label">Фамилия</label>
       <input type="text" th:field="*{lastName}" class="form-control" id="lastName">
+      <div class="text-danger small" th:errors="*{lastName}"></div>
     </div>
 
     <button type="submit" class="btn btn-primary">Сохранить изменения</button>

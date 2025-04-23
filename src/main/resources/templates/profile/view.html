@@ -11,19 +11,19 @@
 
   <div class="card">
     <div class="card-body">
-      <p><strong>Почта:</strong> <span th:text="${user.email}">email@example.com</span></p>
-      <p><strong>Имя:</strong> <span th:text="${user.firstName}">firstname</span></p>
-      <p><strong>Фамилия:</strong> <span th:text="${user.lastName}">lastname</span></p>
+      <p><strong>Почта:</strong> <span th:text="${userDto.email}">email@example.com</span></p>
+      <p><strong>Имя:</strong> <span th:text="${userDto.firstName}">firstname</span></p>
+      <p><strong>Фамилия:</strong> <span th:text="${userDto.lastName}">lastname</span></p>
 
       <hr>
       <h5>Адрес</h5>
-      <div th:if="${user.getAddress() != null}">
-        <p><strong>Регион:</strong> <span th:text="${user.address.region}">Регион</span></p>
-        <p><strong>Город:</strong> <span th:text="${user.address.city}">Город</span></p>
-        <p><strong>Улица:</strong> <span th:text="${user.address.street}">Улица</span></p>
-        <p><strong>Дом:</strong> <span th:text="${user.address.house}">Дом</span></p>
-        <p><strong>Квартира:</strong> <span th:text="${user.address.apartment}">Кв.</span></p>
-        <p><strong>Почтовый индекс:</strong> <span th:text="${user.address.postalCode}">000000</span></p>
+      <div th:if="${userDto.getAddress() != null}">
+        <p><strong>Регион:</strong> <span th:text="${userDto.address.region}">Регион</span></p>
+        <p><strong>Город:</strong> <span th:text="${userDto.address.city}">Город</span></p>
+        <p><strong>Улица:</strong> <span th:text="${userDto.address.street}">Улица</span></p>
+        <p><strong>Дом:</strong> <span th:text="${userDto.address.house}">Дом</span></p>
+        <p><strong>Квартира:</strong> <span th:text="${userDto.address.apartment}">Кв.</span></p>
+        <p><strong>Почтовый индекс:</strong> <span th:text="${userDto.address.postalCode}">000000</span></p>
         <a th:href="@{/profile/address/edit}" class="btn btn-primary">Изменить адрес</a>
         <form th:action="@{/profile/address/delete}" method="post" class="mt-3">
           <input type="hidden" name="_method" value="delete"/>
@@ -33,25 +33,25 @@
           </button>
         </form>
       </div>
-      <div th:if="${user.getAddress() == null}" class="text-muted">
+      <div th:if="${userDto.getAddress() == null}" class="text-muted">
         <a href="/profile/address/create" class="btn btn-outline-primary">Добавить адрес</a>
       </div>
 
       <hr>
       <h5>Telegram</h5>
 
-      <div th:if="${user.telegramChatId != null}">
+      <div th:if="${userDto.telegramChatId != null}">
         <p class="text-success">Телеграм-бот успешно привязан.</p>
-        <form th:if="${user.telegramChatId != null}" th:action="@{/telegram/unlink-telegram}" method="post">
+        <form th:if="${userDto.telegramChatId != null}" th:action="@{/telegram/unlink-telegram}" method="post">
           <button type="submit" class="btn btn-warning">Отвязать Telegram</button>
         </form>
       </div>
 
-      <div th:if="${user.telegramChatId == null}">
+      <div th:if="${userDto.telegramChatId == null}">
         <p>Чтобы получать уведомления в Telegram, откройте бота:</p>
         <p><a href="https://t.me/sportshopcourse_bot" target="_blank">@sportshopcourse_bot</a></p>
         <p>И отправьте команду:</p>
-        <pre>/link <span th:text="${user.email}">your@email.com</span></pre>
+        <pre>/link <span th:text="${userDto.email}">your@email.com</span></pre>
       </div>
     </div>
     </div>

@@ -15,31 +15,37 @@
         <div class="mb-3">
             <label for="region" class="form-label">Регион</label>
             <input type="text" th:field="*{region}" class="form-control" id="region" required>
+            <div class="text-danger small" th:errors="*{region}"></div>
         </div>
 
         <div class="mb-3">
             <label for="city" class="form-label">Город</label>
             <input type="text" th:field="*{city}" class="form-control" id="city" required>
+            <div class="text-danger small" th:errors="*{city}"></div>
         </div>
 
         <div class="mb-3">
             <label for="street" class="form-label">Улица</label>
             <input type="text" th:field="*{street}" class="form-control" id="street" required>
+            <div class="text-danger small" th:errors="*{street}"></div>
         </div>
 
         <div class="mb-3">
             <label for="house" class="form-label">Дом</label>
             <input type="text" th:field="*{house}" class="form-control" id="house" required>
+            <div class="text-danger small" th:errors="*{house}"></div>
         </div>
 
         <div class="mb-3">
             <label for="apartment" class="form-label">Квартира</label>
             <input type="text" th:field="*{apartment}" class="form-control" id="apartment">
+            <div class="text-danger small" th:errors="*{apartment}"></div>
         </div>
 
         <div class="mb-3">
             <label for="postalCode" class="form-label">Почтовый индекс</label>
-            <input type="text" th:field="*{postalCode}" class="form-control" id="postalCode">
+            <input type="number" th:field="*{postalCode}" class="form-control" id="postalCode">
+            <div class="text-danger small" th:errors="*{postalCode}"></div>
         </div>
 
         <button type="submit" class="btn btn-primary">Сохранить</button>

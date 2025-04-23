@@ -44,15 +44,16 @@
         <form th:action="@{/review/edit}" th:object="${userReview}" method="post">
           <input type="hidden" name="_method" value="patch"/>
           <input type="hidden" name="productId" th:value="${product.id}" />
-
           <div class="mb-3">
             <label class="form-label">Оценка (1-5)</label>
             <input type="number" th:field="*{rating}" min="1" max="5" class="form-control" required/>
+            <div class="text-danger small" th:errors="*{rating}"></div>
           </div>
 
           <div class="mb-3">
             <label class="form-label">Комментарий</label>
             <textarea th:field="*{comment}" class="form-control" rows="3" required></textarea>
+            <div class="text-danger small" th:errors="*{comment}"></div>
           </div>
 
           <button type="submit" class="btn btn-warning me-2">Обновить</button>
@@ -73,11 +74,13 @@
           <div class="mb-3">
             <label class="form-label">Оценка (1-5)</label>
             <input type="number" th:field="*{rating}" min="1" max="5" class="form-control" required/>
+            <div class="text-danger small" th:errors="*{rating}"></div>
           </div>
 
           <div class="mb-3">
             <label class="form-label">Комментарий</label>
             <textarea th:field="*{comment}" class="form-control" rows="3" required></textarea>
+            <div class="text-danger small" th:errors="*{comment}"></div>
           </div>
 
           <button type="submit" class="btn btn-primary me-2">Отправить</button>
