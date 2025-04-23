@@ -46,6 +46,11 @@ spring:
   reset:
     password-link: https://sportshop-z6zk.onrender.com:8989/auth/reset-password?token
 
+telegram:
+  bot:
+    token: 7517846929:AAHMJyM97cPNLk63N6NvVkIq7icVPrupNHo
+    username: "@sportshopcourse_bot"
+
 server:
   port: 8989
 debug: true
