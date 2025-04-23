@@ -31,6 +31,7 @@
       <td th:text="${user.role.getLabel()}"></td>
       <td>
         <form th:action="@{/admin/users/change-role}" method="post" class="d-inline">
+          <input type="hidden" name="_method" value="patch"/>
           <input type="hidden" name="email" th:value="${user.email}"/>
           <label>
             <select name="role" class="form-select d-inline w-auto">
@@ -43,6 +44,7 @@
         </form>
 
         <form th:action="@{/admin/users/delete}" method="post" class="d-inline ms-2">
+          <input type="hidden" name="_method" value="delete"/>
           <input type="hidden" name="email" th:value="${user.email}"/>
           <button type="submit" class="btn btn-sm btn-danger"
                   onclick="return confirm('Удалить пользователя?')">Удалить</button>

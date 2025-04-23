@@ -28,7 +28,7 @@ public class AddressController {
         return "redirect:/profile";
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     public String deleteAddress(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         addressService.deleteAddressByUserId(customUserDetails.getId());
         return "redirect:/profile";
@@ -40,7 +40,7 @@ public class AddressController {
         return "address/edit";
     }
 
-    @PostMapping("/edit")
+    @PatchMapping("/edit")
     public String editAddress(@ModelAttribute AddressDto addressDto,
                               @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         addressService.editAddress(addressDto, customUserDetails.getId());

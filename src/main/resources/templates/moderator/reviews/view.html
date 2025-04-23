@@ -30,6 +30,7 @@
 
             <div th:if="${review.status.name() == 'PROCESSING'}">
                 <form th:action="@{/moderator/reviews}" method="post" class="d-flex gap-2 mt-3">
+                    <input type="hidden" name="_method" value="patch"/>
                     <input type="hidden" name="reviewId" th:value="${review.id}" />
                     <button type="submit" name="status" value="APPROVED" class="btn btn-success">Одобрить</button>
                     <button type="submit" name="status" value="REJECTED" class="btn btn-danger"

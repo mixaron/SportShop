@@ -36,6 +36,7 @@
                 <td th:text="${item.product.price}"></td>
                 <td>
                     <form th:action="@{/cart/update}" method="post">
+                        <input type="hidden" name="_method" value="patch"/>
                         <input type="hidden" name="productId" th:value="${item.product.id}">
                         <input type="number" name="quantity" th:value="${item.quantity}" min="0"
                                class="form-control d-inline w-auto">
@@ -45,6 +46,7 @@
                 <td th:text="${item.product.price * item.quantity}"></td>
                 <td>
                     <form th:action="@{/cart/remove}" method="post">
+                        <input type="hidden" name="_method" value="delete"/>
                         <input type="hidden" name="productId" th:value="${item.product.id}">
                         <button type="submit" class="btn btn-danger">Удалить</button>
                     </form>

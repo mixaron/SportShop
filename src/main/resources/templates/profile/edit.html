@@ -8,6 +8,8 @@
 <div class="container mt-5">
 <th:block th:replace="~{header :: header}"/>
   <form th:action="@{/profile/edit}" method="post" th:object="${user}">
+    <input type="hidden" name="_method" value="patch"/>
+    <input type="hidden" name="_method" value="patch"/>
     <div class="mb-3">
       <label for="email" class="form-label">Почта</label>
       <input type="email" th:field="*{email}" class="form-control" id="email" required>

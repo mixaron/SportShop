@@ -42,6 +42,7 @@
         <p th:text="'Статус отзыва: ' + ${userReview.status.label}"></p>
         <h4>Редактировать отзыв</h4>
         <form th:action="@{/review/edit}" th:object="${userReview}" method="post">
+          <input type="hidden" name="_method" value="patch"/>
           <input type="hidden" name="productId" th:value="${product.id}" />
 
           <div class="mb-3">
@@ -59,6 +60,7 @@
         </form>
 
         <form th:action="@{/review/delete/{productId}(productId=${product.id})}" method="post" class="mt-2">
+          <input type="hidden" name="_method" value="delete"/>
           <button type="submit" class="btn btn-danger">Удалить отзыв</button>
         </form>
       </div>

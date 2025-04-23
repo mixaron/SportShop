@@ -19,7 +19,7 @@ public class ModeratorReviewController {
         return "moderator/reviews/view";
     }
 
-    @PostMapping
+    @PatchMapping
     public String changeReviewStatus(@RequestParam Long reviewId, @RequestParam Review.Status status) {
         reviewService.changeStatus(reviewId, status);
         return "redirect:/moderator/reviews";

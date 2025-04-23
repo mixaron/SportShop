@@ -22,7 +22,7 @@ public class ReviewController {
         return "redirect:/products/" + productId;
     }
 
-    @PostMapping("/edit")
+    @PatchMapping("/edit")
     public String editReview(@RequestParam Long productId,
                              @ModelAttribute Review review,
                              @AuthenticationPrincipal CustomUserDetails userDetails) {
@@ -30,7 +30,7 @@ public class ReviewController {
         return "redirect:/products/" + productId;
     }
 
-    @PostMapping("/delete/{productId}")
+    @DeleteMapping("/delete/{productId}")
     public String deleteReview(@PathVariable Long productId,
                                @AuthenticationPrincipal CustomUserDetails userDetails) {
         reviewService.deleteReview(userDetails.getId(), productId);

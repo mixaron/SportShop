@@ -24,6 +24,7 @@
             <td th:text="${category.description}"></td>
             <td>
                 <form th:action="@{/moderator/categories/{id}/delete(id=${category.id})}" method="post" class="d-inline">
+                    <input type="hidden" name="_method" value="delete"/>
                     <button type="submit" class="btn btn-danger btn-sm"
                             onclick="return confirm('Удалить категорию?')">Удалить</button>
                 </form>

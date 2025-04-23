@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ryabchuk.sportshop.dto.UserDto;
-import ryabchuk.sportshop.service.UserService;
+import ryabchuk.sportshop.service.user.UserService;
 
 @Controller
 @RequestMapping("/auth")
@@ -69,7 +69,7 @@ public class AuthController {
         return "auth/reset-password";
     }
 
-    @PostMapping("/reset-password")
+    @PatchMapping("/reset-password")
     public String resetPassword(@RequestParam String token, @RequestParam String password, Model model) {
         try {
             userService.resetPassword(token, password);

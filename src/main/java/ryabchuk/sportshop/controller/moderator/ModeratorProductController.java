@@ -51,7 +51,7 @@ public class ModeratorProductController {
         return "moderator/products/form";
     }
 
-    @PostMapping("/{id}")
+    @PatchMapping("/{id}")
     public String updateProduct(@PathVariable Long id,
                                 @ModelAttribute Product product,
                                 @RequestParam Long categoryId,
@@ -61,7 +61,7 @@ public class ModeratorProductController {
     }
 
 
-    @PostMapping("/{id}/delete")
+    @DeleteMapping("/{id}/delete")
     public String deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return "redirect:/moderator/products";

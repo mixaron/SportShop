@@ -10,7 +10,7 @@
     <form th:action="@{/moderator/products/{id}(id=${product.id})}"
           th:object="${product}" method="post" enctype="multipart/form-data"
           th:if="${product.id != null}">
-
+        <input type="hidden" name="_method" value="patch"/>
         <input type="hidden" th:if="${product != null and product.id != null}" th:field="*{id}"/>
 
         <div class="mb-3">

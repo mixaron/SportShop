@@ -33,7 +33,7 @@ public class CartController {
     }
 
 
-    @PostMapping("/update")
+    @PatchMapping("/update")
     public String updateCart(@RequestParam Long productId,
                              @RequestParam int quantity,
                              @AuthenticationPrincipal CustomUserDetails userDetails) {
@@ -41,7 +41,7 @@ public class CartController {
         return "redirect:/cart";
     }
 
-    @PostMapping("/remove")
+    @DeleteMapping("/remove")
     public String removeFromCart(@RequestParam Long productId,
                                  @AuthenticationPrincipal CustomUserDetails userDetails) {
         cartService.removeFromCart(userDetails.getId(), productId);

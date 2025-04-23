@@ -44,34 +44,34 @@ public class ProductController {
         return "products/list";
     }
 
-@GetMapping("/{productId}")
-public String viewProduct(@AuthenticationPrincipal CustomUserDetails userDetails,
-                         @PathVariable Long productId, Model model) {
-    
-    Product product = productService.getProductById(productId);
-    model.addAttribute("product", product);
+    @GetMapping("/{productId}")
+    public String viewProduct(@AuthenticationPrincipal CustomUserDetails userDetails,
+                             @PathVariable Long productId, Model model) {
 
-    model.addAttribute("approvedReviews", reviewService.getApprovedReviewsByProduct(productId));
-    
-    boolean isAuthenticated = userDetails != null;
-    model.addAttribute("isAuthenticated", isAuthenticated);
+        Product product = productService.getProductById(productId);
+        model.addAttribute("product", product);
 
-    if (isAuthenticated) {
-        boolean isUserBuy = orderItemService.isUserBuyProduct(userDetails.getId(), productId);
-        model.addAttribute("isUserBuy", isUserBuy);
+        model.addAttribute("approvedReviews", reviewService.getApprovedReviewsByProduct(productId));
 
-        Optional<Review> userReview = reviewService.findUserReviewForProduct(userDetails.getId(), productId);
-        model.addAttribute("hasUserReview", userReview.isPresent());
-        model.addAttribute("userReview", userReview.orElse(new Review()));
-    } else {
-        model.addAttribute("isUserBuy", false);
-        model.addAttribute("hasUserReview", false);
+        boolean isAuthenticated = userDetails != null;
+        model.addAttribute("isAuthenticated", isAuthenticated);
+
+        if (isAuthenticated) {
+            boolean isUserBuy = orderItemService.isUserBuyProduct(userDetails.getId(), productId);
+            model.addAttribute("isUserBuy", isUserBuy);
+
+            Optional<Review> userReview = reviewService.findUserReviewForProduct(userDetails.getId(), productId);
+            model.addAttribute("hasUserReview", userReview.isPresent());
+            model.addAttribute("userReview", userReview.orElse(new Review()));
+        } else {
+            model.addAttribute("isUserBuy", false);
+            model.addAttribute("hasUserReview", false);
+        }
+
+        model.addAttribute("review", new Review());
+
+        return "products/view";
     }
-
-    model.addAttribute("review", new Review());
-
-    return "products/view";
-}
 
 
     @GetMapping("/{id}/image")

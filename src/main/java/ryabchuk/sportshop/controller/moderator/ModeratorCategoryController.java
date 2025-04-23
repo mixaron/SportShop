@@ -31,7 +31,7 @@ public class ModeratorCategoryController {
         return "redirect:/moderator/categories";
     }
 
-    @PostMapping("/{id}/delete")
+    @DeleteMapping("/{id}/delete")
     public String deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
         return "redirect:/moderator/categories";

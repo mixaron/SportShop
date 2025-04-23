@@ -11,6 +11,7 @@
     <h2>Редактировать адрес</h2>
 
     <form th:action="@{/profile/address/edit}" method="post" th:object="${addressDto}">
+        <input type="hidden" name="_method" value="patch"/>
         <div class="mb-3">
             <label for="region" class="form-label">Регион</label>
             <input type="text" th:field="*{region}" class="form-control" id="region" required>
