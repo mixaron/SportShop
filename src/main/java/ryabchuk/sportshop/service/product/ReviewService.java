@@ -1,12 +1,14 @@
-package ryabchuk.sportshop.service;
+package ryabchuk.sportshop.service.product;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ryabchuk.sportshop.model.Product;
-import ryabchuk.sportshop.model.Review;
-import ryabchuk.sportshop.model.User;
-import ryabchuk.sportshop.repository.ReviewRepository;
+import ryabchuk.sportshop.model.product.Product;
+import ryabchuk.sportshop.model.product.Review;
+import ryabchuk.sportshop.model.user.User;
+import ryabchuk.sportshop.repository.product.ReviewRepository;
+import ryabchuk.sportshop.service.user.TelegramService;
+import ryabchuk.sportshop.service.user.UserService;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +19,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final UserService userService;
     private final ProductService productService;
+    private final TelegramService telegramService;
 
     public void addReview(Review review, Long userId, Long productId) {
         User user = userService.getUserById(userId);
@@ -56,6 +59,9 @@ public class ReviewService {
         review.setStatus(status);
 
         reviewRepository.save(review);
+
+        telegramService.notifyUserByEmail(review.getUser().getId(),
+                "Статус вашего отзыва " + review.getProduct().getName() + " изменён на: " + status.getLabel());
     }
 
     public List<Review> getApprovedReviewsByProduct(Long productId) {
