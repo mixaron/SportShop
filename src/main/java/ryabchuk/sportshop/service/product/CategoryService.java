@@ -22,11 +22,14 @@ public class CategoryService {
                 .orElseThrow(() -> new EntityNotFoundException("Category not found"));
     }
 
-    public Category createCategory(Category category) {
+    public void createCategory(Category category) {
+        if (categoryRepository.findByName(category.getName()).isPresent()) {
+            throw new IllegalArgumentException("Категория с таким названием уже существует");
+        }
         if (category.getParent() != null) {
             category.setParent(getCategoryById(category.getParent().getId()));
         }
-        return categoryRepository.save(category);
+        categoryRepository.save(category);
     }
 
     public Category updateCategory(Long id, Category updated) {
