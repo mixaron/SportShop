@@ -1,5 +1,6 @@
 package ryabchuk.sportshop.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,11 +14,13 @@ import ryabchuk.sportshop.handler.CustomAuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+    private final CustomAuthenticationFailureHandler failureHandler;
+    private final CustomAuthenticationSuccessHandler successHandler;
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, CustomOAuth2UserService customOAuth2UserService,
-                                                   CustomAuthenticationFailureHandler customAuthenticationFailureHandler,
-                                                   CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                                   CustomOAuth2UserService customOAuth2UserService) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**", "/products/**", "/css/**", "/js/**").permitAll()
@@ -28,8 +31,8 @@ public class SecurityConfig {
 
                 .formLogin(form -> form
                         .loginPage("/auth/login")
-                        .successHandler(customAuthenticationSuccessHandler)
-                        .failureHandler(customAuthenticationFailureHandler)
+                        .successHandler(successHandler)
+                        .failureHandler(failureHandler)
                         .permitAll()
                 )
                 .oauth2Login(oauth2 -> oauth2
