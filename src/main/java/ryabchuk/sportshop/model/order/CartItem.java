@@ -1,7 +1,9 @@
-package ryabchuk.sportshop.model;
+package ryabchuk.sportshop.model.order;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import ryabchuk.sportshop.model.product.Product;
+import ryabchuk.sportshop.model.user.User;
 
 import java.time.LocalDateTime;
 

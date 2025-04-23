@@ -1,10 +1,10 @@
-package ryabchuk.sportshop.service;
+package ryabchuk.sportshop.service.order;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ryabchuk.sportshop.model.Order;
-import ryabchuk.sportshop.model.OrderItem;
-import ryabchuk.sportshop.repository.OrderItemRepository;
+import ryabchuk.sportshop.model.order.Order;
+import ryabchuk.sportshop.model.order.OrderItem;
+import ryabchuk.sportshop.repository.order.OrderItemRepository;
 
 import java.util.List;
 

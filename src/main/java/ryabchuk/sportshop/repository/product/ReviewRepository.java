@@ -1,8 +1,8 @@
-package ryabchuk.sportshop.repository;
+package ryabchuk.sportshop.repository.product;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ryabchuk.sportshop.model.Review;
+import ryabchuk.sportshop.model.product.Review;
 
 import java.util.List;
 import java.util.Optional;

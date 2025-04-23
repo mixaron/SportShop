@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ryabchuk.sportshop.config.user.CustomUserDetails;
 import ryabchuk.sportshop.dto.AddressDto;
-import ryabchuk.sportshop.service.AddressService;
+import ryabchuk.sportshop.service.user.AddressService;
 
 @Controller
 @RequestMapping("/profile/address")

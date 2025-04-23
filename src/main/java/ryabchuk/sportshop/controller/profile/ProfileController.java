@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ryabchuk.sportshop.config.user.CustomUserDetails;
 import ryabchuk.sportshop.dto.UserDto;
-import ryabchuk.sportshop.service.UserService;
+import ryabchuk.sportshop.service.user.UserService;
 
 @Controller
 @RequestMapping("/profile")

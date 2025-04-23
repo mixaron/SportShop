@@ -1,4 +1,4 @@
-package ryabchuk.sportshop.service;
+package ryabchuk.sportshop.service.user;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ryabchuk.sportshop.dto.AddressDto;
 import ryabchuk.sportshop.mapper.AddressMapper;
-import ryabchuk.sportshop.model.Address;
-import ryabchuk.sportshop.model.User;
-import ryabchuk.sportshop.repository.AddressRepository;
+import ryabchuk.sportshop.model.user.Address;
+import ryabchuk.sportshop.model.user.User;
+import ryabchuk.sportshop.repository.user.AddressRepository;
 
 @Service
 @RequiredArgsConstructor

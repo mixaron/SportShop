@@ -5,8 +5,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ryabchuk.sportshop.model.User;
-import ryabchuk.sportshop.repository.UserRepository;
+import ryabchuk.sportshop.model.user.User;
+import ryabchuk.sportshop.repository.user.UserRepository;
 
 import java.util.Map;
 

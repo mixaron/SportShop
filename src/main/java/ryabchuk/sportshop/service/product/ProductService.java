@@ -1,15 +1,15 @@
-package ryabchuk.sportshop.service;
+package ryabchuk.sportshop.service.product;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import ryabchuk.sportshop.model.Category;
-import ryabchuk.sportshop.model.Product;
-import ryabchuk.sportshop.model.User;
-import ryabchuk.sportshop.repository.CategoryRepository;
-import ryabchuk.sportshop.repository.ProductRepository;
-import ryabchuk.sportshop.repository.UserRepository;
+import ryabchuk.sportshop.model.product.Category;
+import ryabchuk.sportshop.model.product.Product;
+import ryabchuk.sportshop.model.user.User;
+import ryabchuk.sportshop.repository.product.CategoryRepository;
+import ryabchuk.sportshop.repository.product.ProductRepository;
+import ryabchuk.sportshop.repository.user.UserRepository;
 
 import java.io.IOException;
 import java.util.List;

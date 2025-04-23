@@ -1,13 +1,12 @@
 package ryabchuk.sportshop.controller.product;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ryabchuk.sportshop.config.user.CustomUserDetails;
-import ryabchuk.sportshop.service.CartService;
+import ryabchuk.sportshop.service.order.CartService;
 
 import java.util.Map;
 

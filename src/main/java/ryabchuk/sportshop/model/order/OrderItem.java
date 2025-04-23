@@ -1,8 +1,9 @@
-package ryabchuk.sportshop.model;
+package ryabchuk.sportshop.model.order;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import ryabchuk.sportshop.model.product.Product;
 
 @Entity
 @Table(name = "order_item")

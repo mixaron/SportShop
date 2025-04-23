@@ -7,9 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ryabchuk.sportshop.config.user.CustomUserDetails;
-import ryabchuk.sportshop.model.Product;
-import ryabchuk.sportshop.service.CategoryService;
-import ryabchuk.sportshop.service.ProductService;
+import ryabchuk.sportshop.model.product.Product;
+import ryabchuk.sportshop.service.product.CategoryService;
+import ryabchuk.sportshop.service.product.ProductService;
 
 import java.io.IOException;
 

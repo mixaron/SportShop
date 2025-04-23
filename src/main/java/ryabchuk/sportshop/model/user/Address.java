@@ -1,4 +1,4 @@
-package ryabchuk.sportshop.model;
+package ryabchuk.sportshop.model.user;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

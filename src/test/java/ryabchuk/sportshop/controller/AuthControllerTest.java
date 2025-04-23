@@ -9,7 +9,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import ryabchuk.sportshop.controller.auth.AuthController;
 import ryabchuk.sportshop.dto.UserDto;
-import ryabchuk.sportshop.service.UserService;
+import ryabchuk.sportshop.service.user.UserService;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;

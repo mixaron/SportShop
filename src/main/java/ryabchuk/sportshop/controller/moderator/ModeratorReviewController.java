@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ryabchuk.sportshop.model.Review;
-import ryabchuk.sportshop.service.ReviewService;
+import ryabchuk.sportshop.model.product.Review;
+import ryabchuk.sportshop.service.product.ReviewService;
 
 @Controller
 @RequestMapping("/moderator/reviews")

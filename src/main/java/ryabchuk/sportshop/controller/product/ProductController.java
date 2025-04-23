@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ryabchuk.sportshop.config.user.CustomUserDetails;
-import ryabchuk.sportshop.model.Product;
-import ryabchuk.sportshop.model.Review;
-import ryabchuk.sportshop.service.CategoryService;
-import ryabchuk.sportshop.service.OrderItemService;
-import ryabchuk.sportshop.service.ProductService;
-import ryabchuk.sportshop.service.ReviewService;
+import ryabchuk.sportshop.model.product.Product;
+import ryabchuk.sportshop.model.product.Review;
+import ryabchuk.sportshop.service.product.CategoryService;
+import ryabchuk.sportshop.service.order.OrderItemService;
+import ryabchuk.sportshop.service.product.ProductService;
+import ryabchuk.sportshop.service.product.ReviewService;
 
 import java.util.List;
 import java.util.Optional;

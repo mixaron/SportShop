@@ -5,8 +5,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ryabchuk.sportshop.config.user.CustomUserDetails;
-import ryabchuk.sportshop.model.Review;
-import ryabchuk.sportshop.service.ReviewService;
+import ryabchuk.sportshop.model.product.Review;
+import ryabchuk.sportshop.service.product.ReviewService;
 
 @Controller
 @RequestMapping("/review")

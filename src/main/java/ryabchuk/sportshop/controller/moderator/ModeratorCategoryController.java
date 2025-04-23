@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ryabchuk.sportshop.model.Category;
-import ryabchuk.sportshop.service.CategoryService;
+import ryabchuk.sportshop.model.product.Category;
+import ryabchuk.sportshop.service.product.CategoryService;
 
 @Controller
 @RequestMapping("/moderator/categories")

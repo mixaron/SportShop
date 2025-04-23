@@ -11,8 +11,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ryabchuk.sportshop.dto.UserDto;
 import ryabchuk.sportshop.mapper.UserMapper;
-import ryabchuk.sportshop.model.User;
-import ryabchuk.sportshop.repository.UserRepository;
+import ryabchuk.sportshop.model.user.User;
+import ryabchuk.sportshop.repository.user.UserRepository;
+import ryabchuk.sportshop.service.user.UserService;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
