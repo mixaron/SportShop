@@ -38,7 +38,7 @@ public class UserService {
 
         User user = userMapper.toEntity(userDto);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
+        user.setRole(User.Role.USER);
         userRepository.save(user);
     }
 
@@ -95,9 +95,15 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException("Пользователь не найден"));
 
         updateEmailIfChanged(user, userDto);
-        updatePasswordIfChanged(user, userDto);
         updateName(user, userDto);
 
+        userRepository.save(user);
+    }
+
+    public void updateUserPassword(Long userId, UserDto userDto) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Пользователь не найден"));
+        updatePasswordIfChanged(user, userDto);
         userRepository.save(user);
     }
 
@@ -112,8 +118,8 @@ public class UserService {
 
     private void updatePasswordIfChanged(User user, UserDto userDto) {
         if (userDto.getPassword() != null && !userDto.getPassword().isBlank()) {
-            if (!passwordEncoder.matches(user.getPassword(), userDto.getCurrentPassword())) {
-                throw new InvalidPasswordException("Пароли не одинаковые!");
+            if (!passwordEncoder.matches(userDto.getCurrentPassword(), user.getPassword())) {
+                throw new InvalidPasswordException("Старый пароль не одинаковый!");
             }
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         }

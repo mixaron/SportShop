@@ -50,4 +50,23 @@ public class ProfileController {
 
         return "redirect:/profile";
     }
+
+    @GetMapping("/edit-password")
+    public String editUserPassword(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+        model.addAttribute("userDto", userService.getUserDtoById(userDetails.getId()));
+        return "profile/edit-password";
+    }
+
+    @PatchMapping("/edit-password")
+    public String updateUserPassword(@AuthenticationPrincipal CustomUserDetails userDetails,
+                             @ModelAttribute @Valid UserDto userDto, BindingResult result) {
+        try {
+            userService.updateUserPassword(userDetails.getId(), userDto);
+        } catch (InvalidPasswordException e) {
+            result.rejectValue("currentPassword", "error.password", e.getMessage());
+            return "profile/edit-password";
+        }
+
+        return "redirect:/profile";
+    }
 }

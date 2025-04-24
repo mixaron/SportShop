@@ -17,20 +17,6 @@
     </div>
 
     <div class="mb-3">
-      <label for="password" class="form-label">Новый пароль</label>
-      <input type="password" th:field="*{password}" class="form-control" id="password">
-      <div class="form-text">Оставьте пустым, если не хотите менять пароль.</div>
-      <div class="text-danger small" th:errors="*{password}"></div>
-    </div>
-
-    <div class="mb-3">
-      <label for="currentPassword" class="form-label">Текущий пароль</label>
-      <input type="password" th:field="*{currentPassword}" class="form-control" id="currentPassword">
-      <div class="form-text">Обязательно, если вы меняете email или пароль.</div>
-      <div class="text-danger small" th:errors="*{currentPassword}"></div>
-    </div>
-
-    <div class="mb-3">
       <label for="firstName" class="form-label">Имя</label>
       <input type="text" th:field="*{firstName}" class="form-control" id="firstName">
       <div class="text-danger small" th:errors="*{firstName}"></div>
