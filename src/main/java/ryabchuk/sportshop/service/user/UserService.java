@@ -151,4 +151,10 @@ public class UserService {
     public void deleteUserByEmail(String email) {
         userRepository.deleteByEmail(email);
     }
+
+    public boolean isUserHaveAddress(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Пользователя не существует"));
+        return user.getAddress() != null;
+    }
 }
