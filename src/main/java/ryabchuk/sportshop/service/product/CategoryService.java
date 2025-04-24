@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ryabchuk.sportshop.model.product.Category;
 import ryabchuk.sportshop.repository.product.CategoryRepository;
+import ryabchuk.sportshop.repository.product.ProductRepository;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
+    private final ProductRepository productRepository;
 
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
@@ -53,6 +55,9 @@ public class CategoryService {
     }
 
     public void deleteCategory(Long id) {
+        if (!productRepository.findByCategoryId(id).isEmpty()) {
+            throw new IllegalStateException("Нельзя удалить категорию, в которой есть товары.");
+        }
         categoryRepository.deleteById(id);
     }
 }

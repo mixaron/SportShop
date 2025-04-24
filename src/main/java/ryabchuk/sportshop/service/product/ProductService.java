@@ -61,6 +61,7 @@ public class ProductService {
         product.setPrice(updated.getPrice());
         product.setCategory(updated.getCategory());
         product.setCategory(category);
+        product.setDescription(updated.getDescription());
         if (imageFile != null && !imageFile.isEmpty()) {
             product.setImage(imageFile.getBytes());
         }

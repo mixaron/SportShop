@@ -34,7 +34,6 @@ public class Product {
     @DecimalMin(value = "0.0", inclusive = false, message = "Цена должна быть больше 0")
     private BigDecimal price;
 
-    @NotNull(message = "Фотография обязательна")
     private byte[] image;
 
     @Enumerated(EnumType.STRING)

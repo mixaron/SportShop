@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ryabchuk.sportshop.model.product.Category;
 import ryabchuk.sportshop.service.product.CategoryService;
 
@@ -64,8 +65,13 @@ public class ModeratorCategoryController {
     }
 
     @DeleteMapping("/{id}/delete")
-    public String deleteCategory(@PathVariable Long id) {
-        categoryService.deleteCategory(id);
+    public String deleteCategory(@PathVariable Long id, RedirectAttributes redirect) {
+        try {
+            categoryService.deleteCategory(id);
+        } catch (IllegalStateException e) {
+            redirect.addFlashAttribute("errorMessage", e.getMessage());
+            return "redirect:/moderator/categories";
+        }
         return "redirect:/moderator/categories";
     }
 }
