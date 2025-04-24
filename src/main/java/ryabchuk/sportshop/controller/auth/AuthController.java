@@ -88,7 +88,11 @@ public class AuthController {
             model.addAttribute("token", token);
             return "auth/reset-password";
         }
-
+        if (password.length() < 8) {
+            model.addAttribute("error", "Пароль должен быть больше 8 символов");
+            model.addAttribute("token", token);
+            return "auth/reset-password";
+        }
         try {
             userService.resetPassword(token, password);
             return "redirect:/auth/login?reset=success";
