@@ -44,7 +44,7 @@ spring:
   thymeleaf:
     cache: true
   reset:
-    password-link: http://localhost:8989/auth/reset-password?token
+    password-link: http://localhost:8989/auth/reset-password?token=
 telegram:
   bot:
     token: 7517846929:AAHMJyM97cPNLk63N6NvVkIq7icVPrupNHo
