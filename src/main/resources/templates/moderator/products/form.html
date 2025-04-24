@@ -2,110 +2,114 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <th:block th:replace="~{header :: header}"/>
 <div class="container mt-5">
-    <h1 th:text="${product != null and product.id != null} ? 'Редактировать товар' : 'Добавить товар'">Управление товаром</h1>
-    <form th:action="@{/moderator/products/{id}(id=${product.id})}"
-          th:object="${product}" method="post" enctype="multipart/form-data"
-          th:if="${product.id != null}">
-        <input type="hidden" name="_method" value="patch"/>
-        <input type="hidden" th:if="${product != null and product.id != null}" th:field="*{id}"/>
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10 text-center">
+            <h1 th:text="${product != null and product.id != null} ? 'Редактировать товар' : 'Добавить товар'">Управление товаром</h1>
+            <form th:action="@{/moderator/products/{id}(id=${product.id})}"
+                  th:object="${product}" method="post" enctype="multipart/form-data"
+                  th:if="${product.id != null}">
+                <input type="hidden" name="_method" value="patch"/>
+                <input type="hidden" th:if="${product != null and product.id != null}" th:field="*{id}"/>
 
-        <div class="mb-3">
-            <label class="form-label">Название</label>
-            <input type="text" th:field="*{name}" class="form-control" required
-                   th:disabled="${product == null}"/>
-            <div class="text-danger small" th:errors="*{name}"></div>
+                <div class="mb-3">
+                    <label class="form-label">Название</label>
+                    <input type="text" th:field="*{name}" class="form-control" required
+                           th:disabled="${product == null}"/>
+                    <div class="text-danger small" th:errors="*{name}"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Описание</label>
+                    <input type="text" th:field="*{description}" class="form-control" required
+                           th:disabled="${product == null}"/>
+                    <div class="text-danger small" th:errors="*{description}"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Категория</label>
+                    <select name="categoryId" class="form-select" required>
+                        <option value="">Выберите категорию</option>
+                        <option th:each="cat : ${categories}"
+                                th:value="${cat.id}"
+                                th:text="${cat.name}"
+                                th:selected="${product != null and product.category != null and cat.id == product.category.id}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Цена</label>
+                    <input type="number" th:field="*{price}" class="form-control" step="0.01" required
+                           th:disabled="${product == null}"/>
+                    <div class="text-danger small" th:errors="*{price}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Изображение</label>
+                    <input type="file" name="imageFile" accept="image/*" class="form-control"/>
+                    <div class="text-danger small" th:errors="*{image}"></div>
+                </div>
+
+                <div class="mb-3" th:if="${product != null and product.image != null}">
+                    <img th:src="@{|/products/${product.id}/image|}" class="img-fluid mb-3" style="max-width: 200px;"/>
+                    <div class="text-danger small" th:errors="*{image}"></div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" th:disabled="${product == null}">Сохранить</button>
+
+            </form>
+
+            <form th:action="@{/moderator/products}"
+                  th:object="${product}" method="post" enctype="multipart/form-data"
+                  th:unless="${product.id != null}">
+
+                <input type="hidden" th:if="${product != null and product.id != null}" th:field="*{id}"/>
+
+                <div class="mb-3">
+                    <label class="form-label">Название</label>
+                    <input type="text" th:field="*{name}" class="form-control" required
+                           th:disabled="${product == null}"/>
+                    <div class="text-danger small" th:errors="*{name}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Категория</label>
+                    <select name="categoryId" class="form-select" required>
+                        <option value="">Выберите категорию</option>
+                        <option th:each="cat : ${categories}"
+                                th:value="${cat.id}"
+                                th:text="${cat.name}"
+                                th:selected="${product != null and product.category != null and cat.id == product.category.id}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Цена</label>
+                    <input type="number" th:field="*{price}" class="form-control" step="0.01" required
+                           th:disabled="${product == null}"/>
+                    <div class="text-danger small" th:errors="*{price}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Изображение</label>
+                    <input type="file" name="imageFile" accept="image/*" class="form-control"/>
+                    <div class="text-danger small" th:errors="*{image}"></div>
+                </div>
+
+                <div class="mb-3" th:if="${product != null and product.image != null}">
+                    <img th:src="@{|/products/${product.id}/image|}" class="img-fluid mb-3" style="max-width: 200px;"/>
+                    <div class="text-danger small" th:errors="*{image}"></div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" th:disabled="${product == null}">Сохранить</button>
+
+            </form>
         </div>
-        <div class="mb-3">
-            <label class="form-label">Описание</label>
-            <input type="text" th:field="*{description}" class="form-control" required
-                   th:disabled="${product == null}"/>
-            <div class="text-danger small" th:errors="*{description}"></div>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Категория</label>
-            <select name="categoryId" class="form-select" required>
-                <option value="">Выберите категорию</option>
-                <option th:each="cat : ${categories}"
-                        th:value="${cat.id}"
-                        th:text="${cat.name}"
-                        th:selected="${product != null and product.category != null and cat.id == product.category.id}">
-                </option>
-            </select>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Цена</label>
-            <input type="number" th:field="*{price}" class="form-control" step="0.01" required
-                   th:disabled="${product == null}"/>
-            <div class="text-danger small" th:errors="*{price}"></div>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Изображение</label>
-            <input type="file" name="imageFile" accept="image/*" class="form-control"/>
-            <div class="text-danger small" th:errors="*{image}"></div>
-        </div>
-
-        <div class="mb-3" th:if="${product != null and product.image != null}">
-            <img th:src="@{|/products/${product.id}/image|}" class="img-fluid mb-3" style="max-width: 200px;"/>
-            <div class="text-danger small" th:errors="*{image}"></div>
-        </div>
-
-        <button type="submit" class="btn btn-primary" th:disabled="${product == null}">Сохранить</button>
-
-    </form>
-
-    <form th:action="@{/moderator/products}"
-          th:object="${product}" method="post" enctype="multipart/form-data"
-          th:unless="${product.id != null}">
-
-        <input type="hidden" th:if="${product != null and product.id != null}" th:field="*{id}"/>
-
-        <div class="mb-3">
-            <label class="form-label">Название</label>
-            <input type="text" th:field="*{name}" class="form-control" required
-                   th:disabled="${product == null}"/>
-            <div class="text-danger small" th:errors="*{name}"></div>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Категория</label>
-            <select name="categoryId" class="form-select" required>
-                <option value="">Выберите категорию</option>
-                <option th:each="cat : ${categories}"
-                        th:value="${cat.id}"
-                        th:text="${cat.name}"
-                        th:selected="${product != null and product.category != null and cat.id == product.category.id}">
-                </option>
-            </select>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Цена</label>
-            <input type="number" th:field="*{price}" class="form-control" step="0.01" required
-                   th:disabled="${product == null}"/>
-            <div class="text-danger small" th:errors="*{price}"></div>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Изображение</label>
-            <input type="file" name="imageFile" accept="image/*" class="form-control"/>
-            <div class="text-danger small" th:errors="*{image}"></div>
-        </div>
-
-        <div class="mb-3" th:if="${product != null and product.image != null}">
-            <img th:src="@{|/products/${product.id}/image|}" class="img-fluid mb-3" style="max-width: 200px;"/>
-            <div class="text-danger small" th:errors="*{image}"></div>
-        </div>
-
-        <button type="submit" class="btn btn-primary" th:disabled="${product == null}">Сохранить</button>
-
-    </form>
-
+    </div>
 </div>
 </body>
 </html>
