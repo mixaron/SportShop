@@ -32,16 +32,24 @@ public class CategoryService {
         categoryRepository.save(category);
     }
 
-    public Category updateCategory(Long id, Category updated) {
+    public void updateCategory(Long id, Category updated) {
         Category category = getCategoryById(id);
+
+        if (categoryRepository.existsByName(updated.getName())
+                && updated.getDescription().equals(category.getDescription())) {
+            throw new IllegalArgumentException("Категория с таким именем уже существует");
+        }
+
         category.setName(updated.getName());
         category.setDescription(updated.getDescription());
+
         if (updated.getParent() != null) {
             category.setParent(getCategoryById(updated.getParent().getId()));
         } else {
             category.setParent(null);
         }
-        return categoryRepository.save(category);
+
+        categoryRepository.save(category);
     }
 
     public void deleteCategory(Long id) {

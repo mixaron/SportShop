@@ -23,6 +23,11 @@
             <td th:text="${category.name}"></td>
             <td th:text="${category.description}"></td>
             <td>
+                <form th:action="@{/moderator/categories/edit}" method="get" class="d-inline">
+                    <input type="hidden" name="categoryId" th:value="${category.id}" />
+                    <button type="submit" class="btn btn-success" >Редактировать</button>
+                </form>
+
                 <form th:action="@{/moderator/categories/{id}/delete(id=${category.id})}" method="post" class="d-inline">
                     <input type="hidden" name="_method" value="delete"/>
                     <button type="submit" class="btn btn-danger btn-sm"

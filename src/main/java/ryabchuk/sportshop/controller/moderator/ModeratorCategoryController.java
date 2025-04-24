@@ -42,6 +42,27 @@ public class ModeratorCategoryController {
         return "redirect:/moderator/categories";
     }
 
+    @GetMapping("/edit")
+    public String editCategoryForm(@RequestParam Long categoryId, Model model) {
+        model.addAttribute("category", categoryService.getCategoryById(categoryId));
+        return "moderator/categories/edit";
+    }
+
+    @PatchMapping("/edit")
+    public String editCategory(@ModelAttribute @Valid Category category, BindingResult result) {
+        if (result.hasErrors()) {
+            return "moderator/categories/edit";
+        }
+
+        try {
+            categoryService.updateCategory(category.getId(), category);
+        } catch (IllegalArgumentException e) {
+            result.rejectValue("name", "error.category", e.getMessage());
+            return "moderator/categories/edit";
+        }
+        return "redirect:/moderator/categories";
+    }
+
     @DeleteMapping("/{id}/delete")
     public String deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
