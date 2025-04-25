@@ -20,7 +20,7 @@ public class AddressController {
     @GetMapping("/create")
     public String createAddressView(@RequestParam(value = "required", required = false) Boolean required,
                                     Model model) {
-        model.addAttribute("address", new AddressDto());
+        model.addAttribute("addressDto", new AddressDto());
         if (Boolean.TRUE.equals(required)) {
             model.addAttribute("requiredMessage", "Чтобы сделать заказ, укажите адрес.");
         }

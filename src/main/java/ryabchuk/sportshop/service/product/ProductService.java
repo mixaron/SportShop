@@ -71,4 +71,8 @@ public class ProductService {
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }
+
+    public List<Product> findByCategoryAndQuery(Long categoryId, String query) {
+        return productRepository.findByCategoryIdAndNameContainingIgnoreCase(categoryId, query);
+    }
 }

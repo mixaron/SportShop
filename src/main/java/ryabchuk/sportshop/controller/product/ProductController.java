@@ -34,15 +34,26 @@ public class ProductController {
     public String listProducts(@RequestParam(required = false) Long categoryId,
                                @RequestParam(required = false) String query,
                                Model model) {
-        List<Product> products = categoryId != null
-                ? productService.filterByCategory(categoryId)
-                : query != null
-                ? productService.searchProducts(query)
-                : productService.getAllProducts();
+        List<Product> products;
+
+        if (categoryId != null && query != null && !query.isBlank()) {
+            products = productService.findByCategoryAndQuery(categoryId, query);
+        } else if (categoryId != null) {
+            products = productService.filterByCategory(categoryId);
+        } else if (query != null && !query.isBlank()) {
+            products = productService.searchProducts(query);
+        } else {
+            products = productService.getAllProducts();
+        }
+
         model.addAttribute("products", products);
         model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("selectedCategoryId", categoryId);
+        model.addAttribute("query", query);
+
         return "products/list";
     }
+
 
     @GetMapping("/{productId}")
     public String viewProduct(@AuthenticationPrincipal CustomUserDetails userDetails,

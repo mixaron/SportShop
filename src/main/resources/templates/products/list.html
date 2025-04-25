@@ -8,9 +8,25 @@
         body {
             padding-top: 70px;
         }
+
         .card-body h5,
         .card-body p.card-text {
             text-align: center;
+        }
+
+        .product-image-container {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: #f8f9fa;
+        }
+
+        .product-image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
     </style>
 </head>
@@ -23,12 +39,17 @@
     <form th:action="@{/products}" class="mb-4">
         <div class="row g-3">
             <div class="col-12 col-md-6">
-                <input type="text" name="query" class="form-control" placeholder="Поиск...">
+                <input type="text" name="query" class="form-control"
+                       placeholder="Поиск..." th:value="${query}">
             </div>
             <div class="col-12 col-md-4">
                 <select name="categoryId" class="form-select">
                     <option value="">Все категории</option>
-                    <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+                    <option th:each="cat : ${categories}"
+                            th:value="${cat.id}"
+                            th:selected="${selectedCategoryId == cat.id}"
+                            th:text="${cat.name}">
+                    </option>
                 </select>
             </div>
             <div class="col-12 col-md-2">
@@ -37,11 +58,12 @@
         </div>
     </form>
 
+
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         <div th:each="product : ${products}" class="col d-flex">
             <div class="card flex-fill h-100">
-                <div th:if="${product.image != null}">
-                    <img th:src="@{|/products/${product.id}/image|}" class="card-img-top img-fluid" alt="Product"/>
+                <div th:if="${product.image != null}" class="product-image-container">
+                    <img th:src="@{|/products/${product.id}/image|}" alt="Product"/>
                 </div>
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title" th:text="${product.name}"></h5>
@@ -55,7 +77,7 @@
                             <button type="button"
                                     th:onclick="'addToCart(' + ${product.id} + ')'"
                                     th:id="'add-btn-' + ${product.id}"
-                                    class="btn btn-success">В корзину</button>
+                                    class="btn btn-success">Добавить в корзину</button>
                         </div>
                     </div>
 
@@ -65,6 +87,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
@@ -83,16 +106,16 @@
                 _csrf: $('input[name="_csrf"]').val()
             },
             success: function () {
-                button.text('Добавлено').prop('disabled', true).removeClass('btn-success').addClass('btn-secondary');
-                setTimeout(function () {
-                    button.text('В корзину').prop('disabled', false).removeClass('btn-secondary').addClass('btn-success');
-                }, 2000);
+                button.replaceWith(
+                    `<a href="/cart" class="btn btn-secondary w-100">Перейти в корзину</a>`
+                );
             },
             error: function () {
                 alert('Ошибка при добавлении в корзину');
             }
         });
     }
+
 </script>
 </body>
 </html>
