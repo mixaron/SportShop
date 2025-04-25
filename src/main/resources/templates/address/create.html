@@ -13,6 +13,7 @@
   <div th:if="${requiredMessage}" class="alert alert-warning" th:text="${requiredMessage}"></div>
 
   <form th:action="@{/profile/address/create}" th:object="${addressDto}" method="post">
+    <input type="hidden" name="required" value="true" th:if="${required}"/>
     <div class="mb-3">
       <label for="region" class="form-label">Регион</label>
       <input type="text" th:field="*{region}" class="form-control" id="region" required>

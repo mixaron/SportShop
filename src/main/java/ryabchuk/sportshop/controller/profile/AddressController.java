@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ryabchuk.sportshop.config.user.CustomUserDetails;
 import ryabchuk.sportshop.dto.AddressDto;
 import ryabchuk.sportshop.service.user.AddressService;
@@ -19,9 +20,12 @@ public class AddressController {
 
     @GetMapping("/create")
     public String createAddressView(@RequestParam(value = "required", required = false) Boolean required,
+                                    @AuthenticationPrincipal CustomUserDetails customUserDetails,
                                     Model model) {
         model.addAttribute("addressDto", new AddressDto());
+        model.addAttribute("required", Boolean.TRUE.equals(required));
         if (Boolean.TRUE.equals(required)) {
+            model.addAttribute("userId", customUserDetails.getId());
             model.addAttribute("requiredMessage", "Чтобы сделать заказ, укажите адрес.");
         }
         return "address/create";
@@ -30,13 +34,14 @@ public class AddressController {
     @PostMapping("/create")
     public String createAddress(@ModelAttribute @Valid AddressDto addressDto,
                                 BindingResult result,
-                                @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+                                @RequestParam(value = "required", required = false) Boolean required,
+                                @AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                RedirectAttributes redirect) {
         if (result.hasErrors()) {
             return "address/create";
         }
-
         addressService.addAddress(addressDto, customUserDetails.getId());
-        return "redirect:/profile";
+        return Boolean.TRUE.equals(required) ? "redirect:/cart" : "redirect:/profile";
     }
 
     @DeleteMapping("/delete")
