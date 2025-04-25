@@ -1,18 +1,19 @@
 package ryabchuk.sportshop.bot;
 
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.bots.TelegramWebhookBot;
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import ryabchuk.sportshop.repository.user.UserRepository;
 
 @Component
 @RequiredArgsConstructor
-public class TelegramBot extends TelegramLongPollingBot {
+public class TelegramBot extends TelegramWebhookBot {
 
     private final UserRepository userRepository;
 
@@ -21,6 +22,9 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Value("${telegram.bot.username}")
     private String botUsername;
+
+    @Value("${telegram.bot.webhook-path}")
+    private String webhookPath;
 
     @Override
     public String getBotUsername() {
@@ -33,9 +37,14 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     @Override
-    public void onUpdateReceived(Update update) {
+    public String getBotPath() {
+        return webhookPath;
+    }
+
+    @Override
+    public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
         if (!update.hasMessage() || !update.getMessage().hasText()) {
-            return;
+            return null;
         }
 
         String chatId = update.getMessage().getChatId().toString();
@@ -43,40 +52,29 @@ public class TelegramBot extends TelegramLongPollingBot {
 
         try {
             if (messageText.equals("/start")) {
-                sendMessage(chatId, "Добро пожаловать! Чтобы привязать аккаунт, используйте /link <email>.");
+                return new SendMessage(chatId, "Добро пожаловать! Чтобы привязать аккаунт, используйте /link <email>.");
             } else if (messageText.startsWith("/link")) {
                 String[] parts = messageText.split(" ");
                 if (parts.length < 2) {
-                    sendMessage(chatId, "Пожалуйста, укажите email: /link your@email.com");
-                    return;
+                    return new SendMessage(chatId, "Пожалуйста, укажите email: /link your@email.com");
                 }
                 String email = parts[1];
-                userRepository.findByEmail(email)
-                        .ifPresentOrElse(user -> {
+                return userRepository.findByEmail(email)
+                        .map(user -> {
                             user.setTelegramChatId(chatId);
                             userRepository.save(user);
-                            try {
-                                sendMessage(chatId, "Аккаунт успешно привязан!");
-                            } catch (TelegramApiException e) {
-                                e.printStackTrace();
-                            }
-                        }, () -> {
-                            try {
-                                sendMessage(chatId, "Пользователь с email " + email + " не найден.");
-                            } catch (TelegramApiException e) {
-                                e.printStackTrace();
-                            }
-                        });
+                            return new SendMessage(chatId, "Аккаунт успешно привязан!");
+                        })
+                        .orElse(new SendMessage(chatId, "Пользователь с email " + email + " не найден."));
             }
-        } catch (TelegramApiException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            return new SendMessage(chatId, "Произошла ошибка, попробуйте позже.");
         }
+        return null;
     }
 
     public void sendMessage(String chatId, String text) throws TelegramApiException {
-        SendMessage message = new SendMessage();
-        message.setChatId(chatId);
-        message.setText(text);
-        execute(message);
+        execute(new SendMessage(chatId, text));
     }
 }
