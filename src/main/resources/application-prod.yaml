@@ -44,7 +44,7 @@ spring:
   thymeleaf:
     cache: true
   reset:
-    password-link: https://sportshop-z6zk.onrender.com:8989/auth/reset-password?token=
+    password-link: https://sportshop-z6zk.onrender.com/auth/reset-password?token=
 
 telegram:
   bot:
