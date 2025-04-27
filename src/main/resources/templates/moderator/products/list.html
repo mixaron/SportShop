@@ -38,14 +38,6 @@
                 <td th:text="${product.name}"></td>
                 <td th:text="${product.category.name}"></td>
                 <td th:text="${product.price} + ' ₽'"></td>
-                <td>
-                    <span th:switch="${product.status}">
-                        <span th:case="'APPROVED'" class="badge bg-success">Одобрен</span>
-                        <span th:case="'PENDING'" class="badge bg-warning text-dark">На рассмотрении</span>
-                        <span th:case="'REJECTED'" class="badge bg-danger">Отклонён</span>
-                        <span th:case="*">Неизвестно</span>
-                    </span>
-                </td>
                 <td th:text="${#temporals.format(product.createdAt, 'dd.MM.yyyy HH:mm')}"></td>
                 <td th:text="${product.description}"></td>
                 <td>
